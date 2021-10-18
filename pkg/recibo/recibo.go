@@ -1,16 +1,12 @@
-/*
-El paquete recibo provee de las estructuras de datos y el funcionamiento necesario para
-representar un recibo de una compra de un cliente.
-*/
+// El paquete recibo provee de las estructuras de datos y el funcionamiento necesario para
+// reresentar un recibo de una compra de un cliente.
 package recibo
 
 import (
 	"cloud.google.com/go/civil"
 )
 
-/*
-ArticuloRecibo representa un artículo concreto tal cual aparecerá en un recibo.
-*/
+// ArticuloRecibo representa un artículo concreto tal cual aparecerá en un recibo.
 type ArticuloRecibo struct {
 	// Cantidad es el número de unidades compradas de el artículo concreto.
 	Cantidad int
@@ -27,29 +23,40 @@ type ArticuloRecibo struct {
 	Articulo Articulo
 }
 
-/*
-Recibo representa un recibo de la compra en un establecimiento, con información sobre
-precios, productos adquiridos, etcétera.
-*/
+// Recibo representa un recibo de la compra en un establecimiento, con información sobre
+// precios, productos adquiridos, etcétera.
 type Recibo struct {
-	// Articulos es un array de objetos de la clase ArticuloRecibo.
-	Articulos []ArticuloRecibo
+	// articulos es un slice de objetos de la clase ArticuloRecibo.
+	articulos []ArticuloRecibo
 
-	// FechaCompra representa la fecha en la que fue realizada la compra.
-	FechaCompra civil.Date
+	// fechaCompra representa la fecha en la que fue realizada la compra.
+	fechaCompra civil.Date
 
-	// Usuario es una cadena que identifica al usuario que ha realizado la compra.
-	Usuario string
+	// usuario es una cadena que identifica al usuario que ha realizado la compra.
+	usuario string
 
-	// LugarCompra es una cadena que identifica la población en la que se
+	// lugarCompra es una cadena que identifica la población en la que se
 	// ha realizado la compra.
-	LugarCompra string
+	lugarCompra string
 
-	// MetodoPago es una cadena que identifica el método de pago usado por el cliente
+	// metodoPago es una cadena que identifica el método de pago usado por el cliente
 	// para pagar la compra.
-	MetodoPago string
+	metodoPago string
 
-	// Establecimiento es una cadena que corresponde al tipo de centro en el que se ha realizado la compra,
+	// establecimiento es una cadena que corresponde al tipo de centro en el que se ha realizado la compra,
 	// ya sea 'Frutería Paqui' o 'Mercadona'
-	Establecimiento string
+	establecimiento string
 }
+
+func NewRecibo(articulos []ArticuloRecibo, fechaCompra civil.Date, usuario string,
+	lugarCompra string, metodoPago string, establecimiento string) Recibo{
+		recibo := Recibo{
+			articulos: articulos,
+			fechaCompra: fechaCompra,
+			usuario: usuario,
+			lugarCompra: lugarCompra,
+			metodoPago: metodoPago,
+			establecimiento: establecimiento,
+		}
+		return recibo
+	}
