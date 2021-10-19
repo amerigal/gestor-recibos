@@ -4,7 +4,7 @@ import (
 	"cloud.google.com/go/civil"
 )
 
-//Articulo representa un artículo vendido por un establecimiento.
+// Articulo representa un artículo vendido por un establecimiento.
 
 type Articulo struct {
 	// descripcion consiste en una breve descripción del artículo tal cual aparece en
@@ -38,6 +38,8 @@ type Articulo struct {
 	tipoIVA byte
 }
 
+// NewArticulo inicializa un objeto de tipo Articulo.
+// Devuelve un objeto de tipo Articulo inicializado con los parámetros indicados.
 func NewArticulo(descripcion string, fabricante string, tipo string, precio float32,
 	lugarFabricacion string, paisFabricacion string, fechaFabricacion civil.Date,
 	tipoIVA byte) Articulo{

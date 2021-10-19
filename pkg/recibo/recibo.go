@@ -48,6 +48,8 @@ type Recibo struct {
 	establecimiento string
 }
 
+// NewRecibo inicializa un objeto de tipo Recibo.
+// Devuelve un objeto de tipo Recibo inicializado con los parámetros indicados.
 func NewRecibo(articulos []ArticuloRecibo, fechaCompra civil.Date, usuario string,
 	lugarCompra string, metodoPago string, establecimiento string) Recibo{
 		recibo := Recibo{
