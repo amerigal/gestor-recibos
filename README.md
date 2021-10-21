@@ -9,3 +9,11 @@ Desarrollo de un gestor de gastos. Se partirá de recibos de compra en formato t
 Documentado [aquí](docs/objetivo_1.md)
 
 > Configuración previa de la cuenta realizada y documentada [aquí](docs/objetivo_0.md)
+
+## Elección de Go  
+
+El motivo por el que se ha elegido Go como lenguaje de programación para el desarrollo del proyecto es que es un lenguaje de tipado estático, eficiente, de fácil uso y que está al día con las corrientes de desarrollo actuales.
+
+## Estado del proyecto
+
+El diseño inicial de las clases `Recibo` y `Articulo` ha sido realizado y se está avanzando en la milestone \[M0\].
