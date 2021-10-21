@@ -1,3 +1,6 @@
 lenguaje: go
 entidad: 
   - pkg/recibo/recibo.go
+automatizar:
+  fichero: Taskfile.yml
+  orden: task
