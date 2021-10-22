@@ -35,3 +35,4 @@ task test
 - [Configuración previa de la cuenta](docs/objetivo_0.md)
 - [Descripción de los usuarios y planificación del proyecto](docs/objetivo_1.md)
 - [Elección del lenguaje de desarrollo y diseño inicial](docs/objetivo_2.md)
+- [Elección del gestor de tareas](docs/objetivo_3.md)
