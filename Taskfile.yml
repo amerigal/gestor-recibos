@@ -4,3 +4,11 @@ tasks:
   check:
     cmds:
       - go build -v -o /dev/null pkg/*/*
+
+  installdeps:
+    cmds:
+      - go mod tidy
+
+  test:
+    cmds:
+      - go test -v pkg/*/*.go
