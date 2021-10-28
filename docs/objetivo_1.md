@@ -16,7 +16,7 @@
 
 ## Hoja de ruta
 
-* [Hito 0 - Diseño inicial](https://github.com/amerigal/proyecto_iv/milestone/1)
+* [Hito 0 - Diseño inicial](https://github.com/amerigal/proyecto_iv/milestone/1) ✓
 
 * [Hito 1 - Registro de recibos](https://github.com/amerigal/proyecto_iv/milestone/2)
 
