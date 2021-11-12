@@ -1,5 +1,9 @@
 package recibo
 
+import (
+	"errors"
+)
+
 // Articulo representa un artículo vendido por un establecimiento.
 
 type Articulo struct {
@@ -23,12 +27,18 @@ type Articulo struct {
 
 // NewArticulo inicializa un objeto de tipo Articulo.
 // Devuelve un objeto de tipo Articulo inicializado con los parámetros indicados.
-func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) Articulo{
-		articulo := Articulo{
-			descripcion: descripcion,
-			tipo: tipo,
-			precio: precio,
-			tipoIVA: tipoIVA,
-		}
-		return articulo
+func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) (Articulo, error) {
+	var articulo Articulo
+
+	if descripcion == "" {
+		return articulo, errors.New("descripción vacía")
 	}
+
+	articulo = Articulo{
+		descripcion: descripcion,
+		tipo:        tipo,
+		precio:      precio,
+		tipoIVA:     tipoIVA,
+	}
+	return articulo, nil
+}
