@@ -17,3 +17,10 @@ func TestPrecioPositivo(t *testing.T) {
 		t.Fatalf("Positividad del precio no validada.")
 	}
 }
+
+func TestTipoIVAABC(t *testing.T) {
+	_, err := NewArticulo("descripción", "tipo", 2.50, 'D')
+	if err == nil {
+		t.Fatalf("Valor de tipoIVA no validado.")
+	}
+}
