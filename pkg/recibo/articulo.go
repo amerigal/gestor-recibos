@@ -38,6 +38,10 @@ func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) 
 		return articulo, errors.New("precio negativo")
 	}
 
+	if tipoIVA != 'A' && tipoIVA != 'B' && tipoIVA != 'C' {
+		return articulo, errors.New("tipoIVA valor incorrecto")
+	}
+
 	articulo = Articulo{
 		descripcion: descripcion,
 		tipo:        tipo,
