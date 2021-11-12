@@ -19,9 +19,9 @@ type Articulo struct {
 	precio float32
 
 	// TipoIVA es un carácter ASCII que podrá tener los siguientes valores:
-	//   A -> IVA general del 21%.
+	//   A -> IVA superreducido, 4%.
 	//   B -> IVA reducido, 10%.
-	//   C -> IVA superreducido, 4%.
+	//   C -> IVA general del 21%.
 	tipoIVA byte
 }
 
