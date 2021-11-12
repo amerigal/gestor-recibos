@@ -34,6 +34,10 @@ func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) 
 		return articulo, errors.New("descripción vacía")
 	}
 
+	if precio < 0 {
+		return articulo, errors.New("precio negativo")
+	}
+
 	articulo = Articulo{
 		descripcion: descripcion,
 		tipo:        tipo,
