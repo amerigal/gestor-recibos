@@ -4,6 +4,7 @@ package recibo
 
 import (
 	"errors"
+	"io/ioutil"
 	"time"
 )
 
@@ -61,5 +62,20 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 		lugarCompra:     lugarCompra,
 		establecimiento: establecimiento,
 	}
+	return recibo, nil
+}
+
+// LeerRecibo recibe un string referente a la ruta de un archivo
+// que contiene un recibo de compra en texto plano y devuelve
+// un objeto Recibo con la información proporcionada.
+func LeerRecibo(archivo string) (Recibo, error) {
+	var recibo Recibo
+
+	_, err := ioutil.ReadFile(archivo)
+
+	if err != nil {
+		return recibo, err
+	}
+
 	return recibo, nil
 }
