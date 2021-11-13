@@ -50,6 +50,10 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 		}
 	}
 
+	if fechaCompra.After(time.Now()) {
+		return recibo, errors.New("fecha futura")
+	}
+
 	recibo = Recibo{
 		articulos:       articulos,
 		fechaCompra:     fechaCompra,
