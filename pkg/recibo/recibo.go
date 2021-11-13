@@ -2,12 +2,15 @@
 // reresentar un recibo de una compra de un cliente.
 package recibo
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 // ArticuloRecibo representa un artículo concreto tal cual aparecerá en un recibo.
 type ArticuloRecibo struct {
 	// Cantidad es el número de unidades compradas de el artículo concreto.
-	Cantidad int
+	Cantidad uint
 
 	// Articulo es un artículo tal y como podría ser vendido por cualquier
 	// establecimiento.
@@ -38,13 +41,21 @@ type Recibo struct {
 // NewRecibo inicializa un objeto de tipo Recibo.
 // Devuelve un objeto de tipo Recibo inicializado con los parámetros indicados.
 func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
-	lugarCompra string, establecimiento string) Recibo{
-		recibo := Recibo{
-			articulos: articulos,
-			fechaCompra: fechaCompra,
-			usuario: usuario,
-			lugarCompra: lugarCompra,
-			establecimiento: establecimiento,
+	lugarCompra string, establecimiento string) (Recibo, error) {
+	var recibo Recibo
+
+	for _, articulo := range articulos {
+		if articulo.Cantidad == 0 {
+			return recibo, errors.New("cantidad nula")
 		}
-		return recibo
 	}
+
+	recibo = Recibo{
+		articulos:       articulos,
+		fechaCompra:     fechaCompra,
+		usuario:         usuario,
+		lugarCompra:     lugarCompra,
+		establecimiento: establecimiento,
+	}
+	return recibo, nil
+}
