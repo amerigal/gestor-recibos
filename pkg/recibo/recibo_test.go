@@ -23,3 +23,10 @@ func TestFechaNoFutura(t *testing.T) {
 		t.Fatalf("Validez de la fecha no comprobada.")
 	}
 }
+
+func TestLeerReciboArchivo(t *testing.T) {
+	_, err := LeerRecibo("ruta/invalida/de/archivo")
+	if err == nil {
+		t.Fatalf("Corrección de lectura de archivo no comprobada.")
+	}
+}
