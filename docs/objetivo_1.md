@@ -8,7 +8,7 @@
 
 ## Historias de usuario
 
-* [HU1 - Reconocimiento de recibos](https://github.com/amerigal/proyecto_iv/issues/2)
+* [HU1 - Reconocimiento de recibos](https://github.com/amerigal/proyecto_iv/issues/2) ✓
 
 * [HU2 - Gasto semanal/mensual](https://github.com/amerigal/proyecto_iv/issues/3)
 
@@ -18,6 +18,6 @@
 
 * [Hito 0 - Diseño inicial](https://github.com/amerigal/proyecto_iv/milestone/1) ✓
 
-* [Hito 1 - Registro de recibos](https://github.com/amerigal/proyecto_iv/milestone/2)
+* [Hito 1 - Registro de recibos](https://github.com/amerigal/proyecto_iv/milestone/2) ✓
 
 * [Hito 2 - Gestor de gastos](https://github.com/amerigal/proyecto_iv/milestone/3)
