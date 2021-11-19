@@ -2,8 +2,8 @@ name: Depligue Automático de Contenedor
 
 on:
   push:
-    #branches:
-    #  - 'main'
+    branches:
+      - 'main'
 
 env:
   USER: ${{ secrets.DOCKER_HUB_USER }}
