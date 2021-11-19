@@ -29,6 +29,13 @@ También es posible lanzar los tests que comprueban el correcto funcionamiento d
 task test
 ```
 
+## Contenedor
+
+Este proyecto dispone de un contenedor que se actualiza automáticamente en Docker Hub cada vez que se hace un push a main. Por el momento, dicho contenedor permite, una vez tenemos descargado el repositorio, el lanzamiento de los tests mediante la orden:
+```
+docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
+```
+
 
 ## Documentación adicional
 
@@ -37,3 +44,4 @@ task test
 - [Elección del lenguaje de desarrollo y diseño inicial](docs/objetivo_2.md)
 - [Elección del gestor de tareas](docs/objetivo_3.md)
 - [Tests unitarios](docs/objetivo_4.md)
+- [Elección de contenedor base](docs/objetivo_5.md)
