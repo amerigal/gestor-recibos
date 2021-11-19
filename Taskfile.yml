@@ -12,3 +12,7 @@ tasks:
   test:
     cmds:
       - go test -v pkg/*/*.go
+
+  docker:
+    cmds:
+      - docker run -t -v `pwd`:/app/test amerigal/gestor-recibos

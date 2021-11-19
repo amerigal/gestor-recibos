@@ -33,7 +33,7 @@ task test
 
 Este proyecto dispone de un contenedor que se actualiza automáticamente en Docker Hub cada vez que se hace un push a main. Por el momento, dicho contenedor permite, una vez tenemos descargado el repositorio, el lanzamiento de los tests mediante la orden:
 ```
-docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
+task docker
 ```
 
 
