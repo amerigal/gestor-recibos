@@ -3,7 +3,9 @@ name: Depligue Automático de Contenedor
 on:
   push:
     branches:
-      - 'main'
+      - main
+    paths:
+      - Dockerfile
 
 env:
   USER: ${{ secrets.DOCKER_HUB_USER }}
