@@ -1,7 +1,7 @@
 package recibo
 
 import (
-	"errors"
+	"fmt"
 )
 
 // Articulo representa un artículo vendido por un establecimiento.
@@ -25,21 +25,32 @@ type Articulo struct {
 	tipoIVA byte
 }
 
+// ErrorArticulo representa un error en la creación de un Articulo
+
+type errorArticulo struct {
+	err string
+}
+
+// ErrorArticulo implementa la interfaz Error
+func (e *errorArticulo) Error() string {
+	return fmt.Sprintf("Error al crear artículo: %s", e.err)
+}
+
 // NewArticulo inicializa un objeto de tipo Articulo.
 // Devuelve un objeto de tipo Articulo inicializado con los parámetros indicados.
 func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) (Articulo, error) {
 	var articulo Articulo
 
 	if descripcion == "" {
-		return articulo, errors.New("descripción vacía")
+		return articulo, &errorArticulo{"descripción vacía"}
 	}
 
 	if precio < 0 {
-		return articulo, errors.New("precio negativo")
+		return articulo, &errorArticulo{"precio negativo"}
 	}
 
 	if tipoIVA != 'A' && tipoIVA != 'B' && tipoIVA != 'C' {
-		return articulo, errors.New("tipoIVA valor incorrecto")
+		return articulo, &errorArticulo{"tipoIVA valor incorrecto"}
 	}
 
 	articulo = Articulo{

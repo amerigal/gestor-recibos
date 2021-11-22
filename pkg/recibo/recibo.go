@@ -3,7 +3,7 @@
 package recibo
 
 import (
-	"errors"
+	"fmt"
 	"io/ioutil"
 	"regexp"
 	"strconv"
@@ -66,6 +66,17 @@ type Recibo struct {
 	establecimiento string
 }
 
+// ErrorRecibo representa un error en la creación de un Recibo
+
+type errorRecibo struct {
+	err string
+}
+
+// ErrorRecibo implementa la interfaz Error
+func (e *errorRecibo) Error() string {
+	return fmt.Sprintf("Error al crear Recibo: %s", e.err)
+}
+
 // NewRecibo inicializa un objeto de tipo Recibo.
 // Devuelve un objeto de tipo Recibo inicializado con los parámetros indicados.
 func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
@@ -74,12 +85,12 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 
 	for _, articulo := range articulos {
 		if articulo.Cantidad == 0 {
-			return recibo, errors.New("cantidad nula")
+			return recibo, &errorRecibo{"cantidad nula"}
 		}
 	}
 
 	if fechaCompra.After(time.Now()) {
-		return recibo, errors.New("fecha futura")
+		return recibo, &errorRecibo{"fecha futura"}
 	}
 
 	recibo = Recibo{
@@ -90,6 +101,17 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 		establecimiento: establecimiento,
 	}
 	return recibo, nil
+}
+
+// ErrorReciboLectura representa un error en la lectura de un Recibo
+
+type errorReciboLectura struct {
+	err string
+}
+
+// ErrorReciboLectura implementa la interfaz Error
+func (e *errorReciboLectura) Error() string {
+	return fmt.Sprintf("Error al leer Recibo: %s", e.err)
 }
 
 // LeerRecibo recibe un string referente a la ruta de un archivo
@@ -109,7 +131,7 @@ func LeerRecibo(archivo string) (Recibo, error) {
 	// Identificamos formato del recibo
 	formatoValido, _ := regexp.MatchString(establecimiento1, contenido)
 	if !formatoValido {
-		return recibo, errors.New("formato no reconocido")
+		return recibo, &errorReciboLectura{"formato no reconocido"}
 	}
 
 	// Obtenemos fecha de compra
@@ -117,14 +139,14 @@ func LeerRecibo(archivo string) (Recibo, error) {
 	fecha := reg.Find([]byte(contenido))
 	fechaCompra, err := time.Parse(layout, string(fecha))
 	if err != nil {
-		return recibo, errors.New("fecha no válida")
+		return recibo, &errorReciboLectura{"fecha no válida"}
 	}
 
 	// Obtenemos líneas con artículos
 	regAr := regexp.MustCompile(regArticulo)
 	lineasArticulo := regAr.FindAll([]byte(contenido), -1)
 	if lineasArticulo == nil {
-		return recibo, errors.New("recibo sin artículos")
+		return recibo, &errorReciboLectura{"recibo sin artículos"}
 	}
 
 	// Creamos artículo para cada línea de artículos

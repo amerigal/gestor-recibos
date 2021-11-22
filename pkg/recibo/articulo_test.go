@@ -4,8 +4,6 @@ import (
 	"testing"
 )
 
-// TestDescripcionNoVacia comprueba la validación de que
-// la descripción no sea vacía al crear un Articulo
 func TestDescripcionNoVacia(t *testing.T) {
 	_, err := NewArticulo("", "tipo", 2.50, 'A')
 	if err == nil {
@@ -13,8 +11,6 @@ func TestDescripcionNoVacia(t *testing.T) {
 	}
 }
 
-// TestPrecioPositivo comprueba la validación de que
-// el precio sea positivo al crear un Articulo
 func TestPrecioPositivo(t *testing.T) {
 	_, err := NewArticulo("descripción", "tipo", -1, 'A')
 	if err == nil {
@@ -22,8 +18,6 @@ func TestPrecioPositivo(t *testing.T) {
 	}
 }
 
-// TestTipoIVAABC comprueba la validación de que
-// el tipo de IVA pertenezca a {A,B,C} al crear un Articulo
 func TestTipoIVAABC(t *testing.T) {
 	_, err := NewArticulo("descripción", "tipo", 2.50, 'D')
 	if err == nil {
