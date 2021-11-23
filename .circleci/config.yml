@@ -1,0 +1,7 @@
+version: 2.1 # latest version
+
+jobs:
+  test:
+    steps:
+      - checkout
+      - run: docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
