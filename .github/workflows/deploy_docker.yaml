@@ -6,12 +6,14 @@ on:
       - main
     paths:
       - Dockerfile
-      
+      - go.mod
+
   pull_request:
     branches:
       - main
     paths:
       - Dockerfile
+      - go.mod
 
 env:
   USER: ${{ secrets.DOCKER_HUB_USER }}
