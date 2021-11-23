@@ -14,10 +14,14 @@
 
 * [HU3 - Tendencia de compra](https://github.com/amerigal/proyecto_iv/issues/4)
 
+* [HU-P1 - Contenedor de tests](https://github.com/amerigal/gestor-recibos/issues/21) ✓
+
 ## Hoja de ruta
 
 * [Hito 0 - Diseño inicial](https://github.com/amerigal/proyecto_iv/milestone/1) ✓
 
 * [Hito 1 - Registro de recibos](https://github.com/amerigal/proyecto_iv/milestone/2) ✓
 
-* [Hito 2 - Gestor de gastos](https://github.com/amerigal/proyecto_iv/milestone/3)
+* [Hito 2 - Contenedor para tests](https://github.com/amerigal/gestor-recibos/milestone/4) ✓
+
+* [Hito 3 - Gestor de gastos](https://github.com/amerigal/proyecto_iv/milestone/3)
