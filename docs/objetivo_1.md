@@ -16,6 +16,8 @@
 
 * [HU-P1 - Contenedor de tests](https://github.com/amerigal/gestor-recibos/issues/21) ✓
 
+* [HU-P2 - Integración Continua](https://github.com/amerigal/gestor-recibos/issues/29) ✓
+
 ## Hoja de ruta
 
 * [Hito 0 - Diseño inicial](https://github.com/amerigal/proyecto_iv/milestone/1) ✓
@@ -24,4 +26,6 @@
 
 * [Hito 2 - Contenedor para tests](https://github.com/amerigal/gestor-recibos/milestone/4) ✓
 
-* [Hito 3 - Gestor de gastos](https://github.com/amerigal/proyecto_iv/milestone/3)
+* [Hito 3 - Integración continua](https://github.com/amerigal/gestor-recibos/milestone/5) ✓
+
+* [Hito 4 - Gestor de gastos](https://github.com/amerigal/proyecto_iv/milestone/3)
