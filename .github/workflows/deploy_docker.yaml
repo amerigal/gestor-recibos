@@ -6,6 +6,12 @@ on:
       - main
     paths:
       - Dockerfile
+      
+  pull_request:
+    branches:
+      - main
+    paths:
+      - Dockerfile
 
 env:
   USER: ${{ secrets.DOCKER_HUB_USER }}
