@@ -1,7 +1,9 @@
-version: 2.1 # latest version
+version: 2.1
 
 jobs:
-  test:
+  build:
+    machine:
+        image: ubuntu-2004:202111-01
     steps:
       - checkout
       - run: docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
