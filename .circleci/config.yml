@@ -2,6 +2,9 @@ version: 2.1
 
 jobs:
   test_language_version:
+      parameters:
+        version:
+          type: string
       docker:
         - image: circleci/goland:<< parameters.version >>
       steps:
