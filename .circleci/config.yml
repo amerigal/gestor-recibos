@@ -9,7 +9,7 @@ jobs:
           image: ubuntu-2004:202111-01
       steps:
         - checkout
-        - run: echo "$secrets.DOCKER_HUB_PASSWORD" | docker login --username amerigal --password-stdin
+        - run: echo "${DOCKER_HUB_PASSWORD}"| docker login --username amerigal --password-stdin
         - run: docker run -t -v `pwd`:/app/test -w="/app/test" cimg/go:<< parameters.version >> go build -v -o /dev/null pkg/*/*
 
   test:
