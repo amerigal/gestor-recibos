@@ -9,7 +9,7 @@ jobs:
           image: ubuntu-2004:202111-01
       steps:
         - checkout
-        - run: docker login --username amerigal --password "${secrets.DOCKER_HUB_PASSWORD}"
+        - run: docker login --username $USER --password $PASSWORD
         - run: docker run -t -v `pwd`:/app/test -w="/app/test" cimg/go:<< parameters.version >> go build -v -o /dev/null pkg/*/*
 
   test:
@@ -23,6 +23,8 @@ workflows:
   test_and_versions:
     jobs:
       - test_language_version:
+          context:
+            - docker
           matrix:
             parameters:
               version: ["1.16", "1.17"]
