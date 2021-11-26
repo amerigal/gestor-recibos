@@ -8,8 +8,8 @@ jobs:
       docker:
         - image: circleci/goland:<< parameters.version >>
           auth:
-            username: $secrets.DOCKER_HUB_USER
-            password : $secrets.DOCKER_HUB_PASSWORD
+            username: ${{ secrets.DOCKER_HUB_USER }}
+            password : ${{ secrets.DOCKER_HUB_PASSWORD }}
       steps:
         - checkout
         - run: go build -v -o /dev/null pkg/*/*
