@@ -7,6 +7,9 @@ jobs:
           type: string
       docker:
         - image: circleci/goland:<< parameters.version >>
+          auth:
+            username: $DOCKER_HUB_USER
+            password : $DOCKER_HUB_PASSWORD
       steps:
         - checkout
         - run: go build -v -o /dev/null pkg/*/*
