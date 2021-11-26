@@ -5,14 +5,12 @@ jobs:
       parameters:
         version:
           type: string
-      docker:
-        - image: cimg/go:<< parameters.version >>
-          auth:
-            username: "$secrets.DOCKER_HUB_USER"
-            password : "$secrets.DOCKER_HUB_PASSWORD"
+      machine:
+        - image: ubuntu-2004:202111-01
       steps:
         - checkout
-        - run: go build -v -o /dev/null pkg/*/*
+        - run: echo "$secrets.DOCKER_HUB_PASSWORD" | docker login --username amerigal --password-stdin
+        - run: docker run -t -v `pwd`:/app/test -w="/app/test" cimg/go:<< parameters.version >> go build -v -o /dev/null pkg/*/*
 
   test:
     machine:
