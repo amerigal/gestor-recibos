@@ -19,6 +19,7 @@ workflows:
   test_and_versions:
     jobs:
       - test_language_version:
-          parametres:
-            version: ["1.16", "1.17"]
+          matrix:
+            parametres:
+              version: ["1.16", "1.17"]
       - test
