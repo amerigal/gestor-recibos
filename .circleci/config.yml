@@ -1,9 +1,24 @@
 version: 2.1
 
 jobs:
-  build:
+  test_language_version:
+      docker:
+        - image: circleci/goland:<< parameters.version >>
+      steps:
+        - checkout
+        - run: go build -v -o /dev/null pkg/*/*
+
+  test:
     machine:
         image: ubuntu-2004:202111-01
     steps:
       - checkout
       - run: docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
+
+workflows:
+  test_and_versions:
+    jobs:
+      - test_language_version:
+          parametres:
+            version: ["1.16", "1.17"]
+      - test
