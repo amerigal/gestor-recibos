@@ -12,15 +12,8 @@ jobs:
         - run: docker login --username $USER --password $PASSWORD
         - run: docker run -t -v `pwd`:/app/test -w="/app/test" cimg/go:<< parameters.version >> go build -v -o /dev/null pkg/*/*
 
-  test:
-    machine:
-        image: ubuntu-2004:202111-01
-    steps:
-      - checkout
-      - run: docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
-
 workflows:
-  test_and_versions:
+  test_versions:
     jobs:
       - test_language_version:
           context:
@@ -28,4 +21,4 @@ workflows:
           matrix:
             parameters:
               version: ["1.16", "1.17"]
-      - test
+
