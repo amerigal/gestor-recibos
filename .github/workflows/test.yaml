@@ -1,0 +1,31 @@
+name: Tests Unitarios
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+env:
+  USER: ${{ secrets.DOCKER_HUB_USER }}
+  PSSW: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  REPO: gestor-recibos
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Instalación Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Acceso a Docker
+        run: docker login --username=$USER --password=$PSSW
+
+      - name: Lanza Tests
+        run: docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
