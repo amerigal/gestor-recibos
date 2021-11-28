@@ -35,7 +35,7 @@ Este proyecto dispone de un contenedor que se actualiza automáticamente en Dock
 ```
 task docker
 ```
-
+Además, se ha configurado el proyecto mediante Circle-CI para que se lance el contenedor de tests automáticamente al incorporar código.
 
 ## Documentación adicional
 
@@ -45,3 +45,4 @@ task docker
 - [Elección del gestor de tareas](docs/objetivo_3.md)
 - [Tests unitarios](docs/objetivo_4.md)
 - [Elección de contenedor base](docs/objetivo_5.md)
+- [Elección de servicio de IC](docs/objetivo_6.md)

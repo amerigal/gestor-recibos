@@ -5,3 +5,4 @@ automatizar:
   fichero: Taskfile.yml
   orden: task
 test: pkg/recibo/recibo_test.go
+CI: .circleci/config.yml

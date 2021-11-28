@@ -13,3 +13,5 @@ Directorio para albergar la documentación de los distintos objetivos de la asig
 * [Objetivo 4](objetivo_4.md)
 
 * [Objetivo 5](objetivo_5.md)
+
+* [Objetivo 6](objetivo_6.md)

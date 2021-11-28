@@ -1,0 +1,24 @@
+version: 2.1
+
+jobs:
+  test_language_version:
+      parameters:
+        version:
+          type: string
+      machine:
+          image: ubuntu-2004:202111-01
+      steps:
+        - checkout
+        - run: docker login --username $USER --password $PASSWORD
+        - run: docker run -t -v `pwd`:/app/test -w="/app/test" cimg/go:<< parameters.version >> go build -v -o /dev/null pkg/*/*
+
+workflows:
+  test_versions:
+    jobs:
+      - test_language_version:
+          context:
+            - docker
+          matrix:
+            parameters:
+              version: ["1.16", "1.17"]
+
