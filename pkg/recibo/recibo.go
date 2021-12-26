@@ -37,12 +37,25 @@ const posIVAInv = 1
 
 // ArticuloRecibo representa un artículo concreto tal cual aparecerá en un recibo.
 type ArticuloRecibo struct {
+	// Id es el identificador de ArticuloRecibo dentro de un Recibo
+	id uint
+
 	// Cantidad es el número de unidades compradas de el artículo concreto.
-	Cantidad uint
+	cantidad uint
 
 	// Articulo es un artículo tal y como podría ser vendido por cualquier
 	// establecimiento.
 	Articulo Articulo
+}
+
+// GetId devuelve el atributo id del ArticuloRecibo art
+func (art *ArticuloRecibo) GetId() uint {
+	return art.id
+}
+
+// GetCantidad devuelve el atributo cantidad del ArticuloRecibo art
+func (art *ArticuloRecibo) GetCantidad() uint {
+	return art.cantidad
 }
 
 // Recibo representa un recibo de la compra en un establecimiento, con información sobre
@@ -67,14 +80,13 @@ type Recibo struct {
 }
 
 // ErrorRecibo representa un error en la creación de un Recibo
-
 type errorRecibo struct {
 	err string
 }
 
 // ErrorRecibo implementa la interfaz Error
 func (e *errorRecibo) Error() string {
-	return fmt.Sprintf("Error al crear Recibo: %s", e.err)
+	return fmt.Sprintf("Error en objeto Recibo: %s", e.err)
 }
 
 // NewRecibo inicializa un objeto de tipo Recibo.
@@ -84,7 +96,7 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 	var recibo Recibo
 
 	for _, articulo := range articulos {
-		if articulo.Cantidad == 0 {
+		if articulo.cantidad == 0 {
 			return recibo, &errorRecibo{"cantidad nula"}
 		}
 	}
@@ -103,8 +115,76 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 	return recibo, nil
 }
 
-// ErrorReciboLectura representa un error en la lectura de un Recibo
+// GetArticulos devuelve el atributo articulos del Recibo recibo
+func (recibo *Recibo) GetArticulos() []ArticuloRecibo {
+	return recibo.articulos
+}
 
+// GetFechaCompra devuelve el atributo fechaCompra del Recibo recibo
+func (recibo *Recibo) GetFechaCompra() time.Time {
+	return recibo.fechaCompra
+}
+
+// GetUsuario devuelve el atributo usuario del Recibo recibo
+func (recibo *Recibo) GetUsuario() string {
+	return recibo.usuario
+}
+
+// GetLugarCompra devuelve el atributo lugarCompra del Recibo recibo
+func (recibo *Recibo) GetLugarCompra() string {
+	return recibo.lugarCompra
+}
+
+// GetEstablecimiento devuelve el atributo establecimiento del Recibo recibo
+func (recibo *Recibo) GetEstablecimiento() string {
+	return recibo.establecimiento
+}
+
+// SetUsuario modifica el atributo usuario del Articulo art
+func (recibo *Recibo) SetUsuario(usuario string) string {
+	recibo.usuario = usuario
+	return recibo.usuario
+}
+
+// SetTipo modifica el atributo tipo del articulo con idArticulo en el Recibo recibo
+func (recibo *Recibo) SetTipo(idArticulo uint, tipo string) (string, error) {
+	encontrado := false
+
+	for _, articulo := range recibo.articulos {
+		if articulo.GetId() == idArticulo {
+			encontrado = true
+			articulo.Articulo.SetTipo(tipo)
+		}
+	}
+
+	if !encontrado {
+		return tipo, &errorRecibo{fmt.Sprintf("no existe ningún articulo con id %d", idArticulo)}
+	}
+
+	return tipo, nil
+
+}
+
+// SiguienteId devuelve el siguiente al mayor id de los articulos de un recibo
+func (recibo *Recibo) siguienteID() uint {
+	if recibo.articulos == nil {
+		return 0
+	}
+
+	if len(recibo.articulos) == 0 {
+		return 0
+	}
+
+	maxId := uint(0)
+	for _, articulo := range recibo.articulos {
+		if articulo.id > maxId {
+			maxId = articulo.id
+		}
+	}
+	return maxId + 1
+}
+
+// ErrorReciboLectura representa un error en la lectura de un Recibo
 type errorReciboLectura struct {
 	err string
 }
@@ -167,12 +247,15 @@ func LeerRecibo(archivo string) (Recibo, error) {
 		tipoIVA := []byte(art2[posIVA])
 		descripcion := strings.Join(art2[posUnd+1:posPrecio], " ")
 
+		// Asignamos identificador
+		id := recibo.siguienteID()
+
 		// Creamos objeto Articulo
 		articulo, err := NewArticulo(descripcion, "", precio, tipoIVA[0])
 		if err != nil {
 			return recibo, err
 		}
-		articuloRecibo := ArticuloRecibo{und, articulo}
+		articuloRecibo := ArticuloRecibo{id, und, articulo}
 
 		// Añadimos articuloRecibo a slice de ArticuloRecibo
 		articulosRecibo = append(articulosRecibo, articuloRecibo)
