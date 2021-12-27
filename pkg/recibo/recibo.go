@@ -150,10 +150,10 @@ func (recibo *Recibo) SetUsuario(usuario string) string {
 func (recibo *Recibo) SetTipo(idArticulo uint, tipo string) (string, error) {
 	encontrado := false
 
-	for _, articulo := range recibo.articulos {
-		if articulo.GetId() == idArticulo {
+	for i := range recibo.articulos {
+		if recibo.articulos[i].GetId() == idArticulo {
 			encontrado = true
-			articulo.Articulo.SetTipo(tipo)
+			recibo.articulos[i].Articulo.SetTipo(tipo)
 		}
 	}
 
@@ -166,7 +166,7 @@ func (recibo *Recibo) SetTipo(idArticulo uint, tipo string) (string, error) {
 }
 
 // SiguienteId devuelve el siguiente al mayor id de los articulos de un recibo
-func (recibo *Recibo) siguienteID() uint {
+func (recibo *Recibo) siguienteId() uint {
 	if recibo.articulos == nil {
 		return 0
 	}
@@ -248,7 +248,7 @@ func LeerRecibo(archivo string) (Recibo, error) {
 		descripcion := strings.Join(art2[posUnd+1:posPrecio], " ")
 
 		// Asignamos identificador
-		id := recibo.siguienteID()
+		id := recibo.siguienteId()
 
 		// Creamos objeto Articulo
 		articulo, err := NewArticulo(descripcion, "", precio, tipoIVA[0])
