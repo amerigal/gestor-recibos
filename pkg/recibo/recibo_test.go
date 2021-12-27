@@ -31,6 +31,36 @@ func TestLeerReciboArchivo(t *testing.T) {
 	}
 }
 
-// TODO: test siguienteId
+func TestSiguienteIdPrimero(t *testing.T) {
+	recibo, _ := NewRecibo([]ArticuloRecibo{}, time.Now(), "u", "l", "e")
+	if recibo.siguienteId() != 0 {
+		t.Fatalf("Primer id no asigndo correctamente.")
+	}
+}
 
-// TODO: test setTipo
+func TestSiguienteIdSegundo(t *testing.T) {
+	articulo, _ := NewArticulo("descripcion", "tipo", 2.50, 'A')
+	articuloRecibo := ArticuloRecibo{0, 1, articulo}
+	recibo, _ := NewRecibo([]ArticuloRecibo{articuloRecibo}, time.Now(), "u", "l", "e")
+	if recibo.siguienteId() != 1 {
+		t.Fatalf("Los id no se asignan consecutivamente.")
+	}
+}
+
+func TestSetTipoIdNoExistente(t *testing.T) {
+	recibo, _ := NewRecibo([]ArticuloRecibo{}, time.Now(), "u", "l", "e")
+	_, err := recibo.SetTipo(0, "tipo")
+	if err == nil {
+		t.Fatalf("Comprobación de existencia de id no realizada.")
+	}
+}
+
+func TestSetTipo(t *testing.T) {
+	articulo, _ := NewArticulo("descripcion", "tipo", 2.50, 'A')
+	articuloRecibo := ArticuloRecibo{0, 1, articulo}
+	recibo, _ := NewRecibo([]ArticuloRecibo{articuloRecibo}, time.Now(), "u", "l", "e")
+	recibo.SetTipo(0, "tipoNuevo")
+	if recibo.articulos[0].Articulo.GetTipo() != "tipoNuevo" {
+		t.Fatalf("Asignación incorrecta del atributo tipo.")
+	}
+}
