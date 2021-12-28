@@ -98,3 +98,8 @@ func GetRecuentoSemanal(recibos []Recibo, usuario string) ([]ArticuloRecuento, e
 func GetRecuentoMensual(recibos []Recibo, usuario string) ([]ArticuloRecuento, error) {
 	return agruparArticulos(recibos, usuario, time.Now().Add(-30*24*time.Hour), "")
 }
+
+// GetTendencia devuelve los artículos en los que se ha realizado mayor gasto en lugarCompra.
+func GetTendencia(recibos []Recibo, lugarCompra string) ([]ArticuloRecuento, error) {
+	return agruparArticulos(recibos, "", time.Time{}, lugarCompra)
+}
