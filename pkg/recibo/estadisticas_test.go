@@ -112,3 +112,39 @@ func TestGetRecuentoMensual(t *testing.T) {
 		t.Fatalf("Error al calcular recuento mensual")
 	}
 }
+
+func TestGetTendencia(t *testing.T) {
+	var articulosRecibo [6]ArticuloRecibo
+
+	for i := range articulosRecibo {
+		tipo := fmt.Sprintf("tipo%d", i)
+		precio := float32(i + 1)
+		articulo, _ := NewArticulo("descripcion", tipo, precio, 'A')
+		articulosRecibo[i] = ArticuloRecibo{0, 1, articulo}
+	}
+
+	reciboValido1, _ := NewRecibo([]ArticuloRecibo{articulosRecibo[0], articulosRecibo[1], articulosRecibo[2]}, time.Now(), "u", "lugar", "e")
+	reciboValido2, _ := NewRecibo([]ArticuloRecibo{articulosRecibo[3], articulosRecibo[4], articulosRecibo[5]}, time.Now().Add(-100*24*time.Hour), "u", "lugar", "e")
+	reciboNoValido1, _ := NewRecibo([]ArticuloRecibo{articulosRecibo[0]}, time.Now(), "u", "otro lugar", "e")
+	reciboNoValido2, _ := NewRecibo([]ArticuloRecibo{articulosRecibo[0]}, time.Now(), "u", "otro lugar", "e")
+
+	recibos := []Recibo{reciboValido1, reciboValido2, reciboNoValido1, reciboNoValido2}
+	recuento, _ := GetTendencia(recibos, "lugar")
+
+	if len(recuento) != 5 {
+		t.Fatalf("Error en el número de artículos en cálculo de tendencia.%d", len(recuento))
+	}
+
+	calculoCorrecto := true
+	for i := range recuento {
+		tipo := fmt.Sprintf("tipo%d", 5-i)
+		gasto := float32(6-i) * (1 + iva['A'])
+		if recuento[i].Tipo != tipo || recuento[i].Gasto != gasto {
+			calculoCorrecto = false
+		}
+	}
+
+	if !calculoCorrecto {
+		t.Fatalf("Error al calcular tendencia")
+	}
+}
