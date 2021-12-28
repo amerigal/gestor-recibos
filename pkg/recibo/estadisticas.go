@@ -86,3 +86,15 @@ func agruparArticulos(recibos []Recibo, usuario string, fechaIncio time.Time, lu
 
 	return recuento[:topSize], nil
 }
+
+// GetRecuentoSemanal devuelve los artículos en los que usuario ha realizado mayor
+// gasto en la última semana.
+func GetRecuentoSemanal(recibos []Recibo, usuario string) ([]ArticuloRecuento, error) {
+	return agruparArticulos(recibos, usuario, time.Now().Add(-7*24*time.Hour), "")
+}
+
+// GetRecuentoMensual devuelve los artículos en los que usuario ha realizado mayor
+// gasto en el último mes.
+func GetRecuentoMensual(recibos []Recibo, usuario string) ([]ArticuloRecuento, error) {
+	return agruparArticulos(recibos, usuario, time.Now().Add(-30*24*time.Hour), "")
+}
