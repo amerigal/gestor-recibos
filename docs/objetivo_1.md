@@ -34,6 +34,8 @@
 
 * [Hito 4 - Gestor de gastos](https://github.com/amerigal/gestor-recibos/milestone/3) ✓
 
-* [Hito 5 - API con servicios adicionales](https://github.com/amerigal/gestor-recibos/milestone/6)
+* [Hito 5 - Registro de actividad y Configuración](https://github.com/amerigal/gestor-recibos/milestone/8)
 
-* [Hito 6 - Despliegue](https://github.com/amerigal/gestor-recibos/milestone/7)
+* [Hito 6 - API](https://github.com/amerigal/gestor-recibos/milestone/6)
+
+* [Hito 7 - Despliegue](https://github.com/amerigal/gestor-recibos/milestone/7)
