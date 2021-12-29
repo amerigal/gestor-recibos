@@ -1,5 +1,5 @@
 // El paquete recibo provee de las estructuras de datos y el funcionamiento necesario para
-// reresentar un recibo de una compra de un cliente.
+// representar un recibo de una compra de un cliente.
 package recibo
 
 import (
@@ -45,17 +45,7 @@ type ArticuloRecibo struct {
 
 	// Articulo es un artículo tal y como podría ser vendido por cualquier
 	// establecimiento.
-	Articulo Articulo
-}
-
-// GetId devuelve el atributo id del ArticuloRecibo art
-func (art *ArticuloRecibo) GetId() uint {
-	return art.id
-}
-
-// GetCantidad devuelve el atributo cantidad del ArticuloRecibo art
-func (art *ArticuloRecibo) GetCantidad() uint {
-	return art.cantidad
+	articulo Articulo
 }
 
 // Recibo representa un recibo de la compra en un establecimiento, con información sobre
@@ -91,7 +81,7 @@ func (e *errorRecibo) Error() string {
 
 // NewRecibo inicializa un objeto de tipo Recibo.
 // Devuelve un objeto de tipo Recibo inicializado con los parámetros indicados.
-func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
+func newRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
 	lugarCompra string, establecimiento string) (Recibo, error) {
 	var recibo Recibo
 
@@ -115,45 +105,20 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 	return recibo, nil
 }
 
-// GetArticulos devuelve el atributo articulos del Recibo recibo
-func (recibo *Recibo) GetArticulos() []ArticuloRecibo {
-	return recibo.articulos
-}
-
-// GetFechaCompra devuelve el atributo fechaCompra del Recibo recibo
-func (recibo *Recibo) GetFechaCompra() time.Time {
-	return recibo.fechaCompra
-}
-
-// GetUsuario devuelve el atributo usuario del Recibo recibo
-func (recibo *Recibo) GetUsuario() string {
-	return recibo.usuario
-}
-
-// GetLugarCompra devuelve el atributo lugarCompra del Recibo recibo
-func (recibo *Recibo) GetLugarCompra() string {
-	return recibo.lugarCompra
-}
-
-// GetEstablecimiento devuelve el atributo establecimiento del Recibo recibo
-func (recibo *Recibo) GetEstablecimiento() string {
-	return recibo.establecimiento
-}
-
 // SetUsuario modifica el atributo usuario del Articulo art
-func (recibo *Recibo) SetUsuario(usuario string) string {
+func (recibo *Recibo) setUsuario(usuario string) string {
 	recibo.usuario = usuario
 	return recibo.usuario
 }
 
 // SetTipo modifica el atributo tipo del articulo con idArticulo en el Recibo recibo
-func (recibo *Recibo) SetTipo(idArticulo uint, tipo string) (string, error) {
+func (recibo *Recibo) setTipo(idArticulo uint, tipo string) (string, error) {
 	encontrado := false
 
 	for i := range recibo.articulos {
-		if recibo.articulos[i].GetId() == idArticulo {
+		if recibo.articulos[i].id == idArticulo {
 			encontrado = true
-			recibo.articulos[i].Articulo.SetTipo(tipo)
+			recibo.articulos[i].articulo.setTipo(tipo)
 		}
 	}
 
@@ -197,7 +162,7 @@ func (e *errorReciboLectura) Error() string {
 // LeerRecibo recibe un string referente a la ruta de un archivo
 // que contiene un recibo de compra en texto plano y devuelve
 // un objeto Recibo con la información proporcionada.
-func LeerRecibo(archivo string) (Recibo, error) {
+func leerRecibo(archivo string) (Recibo, error) {
 	var recibo Recibo
 	var articulosRecibo []ArticuloRecibo
 
@@ -251,7 +216,7 @@ func LeerRecibo(archivo string) (Recibo, error) {
 		id := recibo.siguienteId()
 
 		// Creamos objeto Articulo
-		articulo, err := NewArticulo(descripcion, "", precio, tipoIVA[0])
+		articulo, err := newArticulo(descripcion, "", precio, tipoIVA[0])
 		if err != nil {
 			return recibo, err
 		}
@@ -263,7 +228,7 @@ func LeerRecibo(archivo string) (Recibo, error) {
 	}
 
 	// Construimos objeto Recibo
-	recibo, err = NewRecibo(articulosRecibo, fechaCompra, "", lugarCompra1, establecimiento1)
+	recibo, err = newRecibo(articulosRecibo, fechaCompra, "", lugarCompra1, establecimiento1)
 	if err != nil {
 		return recibo, err
 	}

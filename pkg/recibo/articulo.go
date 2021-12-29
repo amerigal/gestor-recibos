@@ -38,7 +38,7 @@ func (e *errorArticulo) Error() string {
 
 // NewArticulo inicializa un objeto de tipo Articulo.
 // Devuelve un objeto de tipo Articulo inicializado con los parámetros indicados.
-func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) (Articulo, error) {
+func newArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) (Articulo, error) {
 	var articulo Articulo
 
 	if descripcion == "" {
@@ -62,28 +62,8 @@ func NewArticulo(descripcion string, tipo string, precio float32, tipoIVA byte) 
 	return articulo, nil
 }
 
-// GetDescripcion devuelve el atributo descripcion del Articulo art
-func (art *Articulo) GetDescripcion() string {
-	return art.descripcion
-}
-
-// GetTipo devuelve el atributo tipo del Articulo art
-func (art *Articulo) GetTipo() string {
-	return art.tipo
-}
-
-// GetPrecio devuelve el atributo precio del Articulo art
-func (art *Articulo) GetPrecio() float32 {
-	return art.precio
-}
-
-// GetTipoIVA devuelve el atributo tipoIVA del Articulo art
-func (art *Articulo) GetTipoIVA() byte {
-	return art.tipoIVA
-}
-
 // SetTipo modifica el atributo tipo del Articulo art
-func (art *Articulo) SetTipo(tipo string) string {
+func (art *Articulo) setTipo(tipo string) string {
 	art.tipo = tipo
 	return art.tipo
 }
