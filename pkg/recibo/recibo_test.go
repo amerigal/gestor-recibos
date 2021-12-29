@@ -49,9 +49,9 @@ func TestSiguienteIdSegundo(t *testing.T) {
 
 func TestSetTipoIdNoExistente(t *testing.T) {
 	recibo, _ := newRecibo([]ArticuloRecibo{}, time.Now(), "u", "l", "e")
-	_, err := recibo.setTipo(0, "tipo")
+	err := recibo.setTipo(0, "tipo")
 	if err == nil {
-		t.Fatalf("Comprobación de existencia de id no realizada.")
+		t.Fatalf("Comprobación de existencia de id de ArticuloRecibo no realizada.")
 	}
 }
 

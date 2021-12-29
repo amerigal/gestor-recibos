@@ -95,29 +95,40 @@ func newRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 	return recibo, nil
 }
 
-// SetUsuario modifica el atributo usuario del Articulo art
-func (recibo *Recibo) setUsuario(usuario string) string {
-	recibo.usuario = usuario
-	return recibo.usuario
-}
-
-// SetTipo modifica el atributo tipo del articulo con idArticulo en el Recibo recibo
-func (recibo *Recibo) setTipo(idArticulo uint, tipo string) (string, error) {
+// GetArticulo devuelve el ArticuloRecibo con id 'idArticulo'
+func (recibo *Recibo) getArticulo(idArticulo uint) (*ArticuloRecibo, error) {
+	var articulo *ArticuloRecibo
 	encontrado := false
 
 	for i := range recibo.articulos {
 		if recibo.articulos[i].id == idArticulo {
 			encontrado = true
-			recibo.articulos[i].articulo.setTipo(tipo)
+			articulo = &recibo.articulos[i]
 		}
 	}
 
 	if !encontrado {
-		return tipo, &errorRecibo{fmt.Sprintf("no existe ningún articulo con id %d", idArticulo)}
+		return articulo, &errorRecibo{fmt.Sprintf("no existe ningún articulo con id %d", idArticulo)}
+	}
+	return articulo, nil
+}
+
+// SetUsuario modifica el atributo usuario del Articulo art
+func (recibo *Recibo) setUsuario(usuario string) {
+	recibo.usuario = usuario
+}
+
+// SetTipo modifica el atributo tipo del articulo con idArticulo en el Recibo recibo
+func (recibo *Recibo) setTipo(idArticulo uint, tipo string) error {
+	articulo, err := recibo.getArticulo(idArticulo)
+
+	if err != nil {
+		return err
 	}
 
-	return tipo, nil
+	articulo.articulo.tipo = tipo
 
+	return nil
 }
 
 // SiguienteId devuelve el siguiente al mayor id de los articulos de un recibo
