@@ -1,5 +1,5 @@
 // El paquete recibo provee de las estructuras de datos y el funcionamiento necesario para
-// reresentar un recibo de una compra de un cliente.
+// representar un recibo de una compra de un cliente.
 package recibo
 
 import (
@@ -37,12 +37,15 @@ const posIVAInv = 1
 
 // ArticuloRecibo representa un artículo concreto tal cual aparecerá en un recibo.
 type ArticuloRecibo struct {
+	// Id es el identificador de ArticuloRecibo dentro de un Recibo
+	id uint
+
 	// Cantidad es el número de unidades compradas de el artículo concreto.
-	Cantidad uint
+	cantidad uint
 
 	// Articulo es un artículo tal y como podría ser vendido por cualquier
 	// establecimiento.
-	Articulo Articulo
+	articulo Articulo
 }
 
 // Recibo representa un recibo de la compra en un establecimiento, con información sobre
@@ -67,24 +70,23 @@ type Recibo struct {
 }
 
 // ErrorRecibo representa un error en la creación de un Recibo
-
 type errorRecibo struct {
 	err string
 }
 
 // ErrorRecibo implementa la interfaz Error
 func (e *errorRecibo) Error() string {
-	return fmt.Sprintf("Error al crear Recibo: %s", e.err)
+	return fmt.Sprintf("Error en objeto Recibo: %s", e.err)
 }
 
 // NewRecibo inicializa un objeto de tipo Recibo.
 // Devuelve un objeto de tipo Recibo inicializado con los parámetros indicados.
-func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
+func newRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
 	lugarCompra string, establecimiento string) (Recibo, error) {
 	var recibo Recibo
 
 	for _, articulo := range articulos {
-		if articulo.Cantidad == 0 {
+		if articulo.cantidad == 0 {
 			return recibo, &errorRecibo{"cantidad nula"}
 		}
 	}
@@ -103,8 +105,51 @@ func NewRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string
 	return recibo, nil
 }
 
-// ErrorReciboLectura representa un error en la lectura de un Recibo
+// SetUsuario modifica el atributo usuario del Articulo art
+func (recibo *Recibo) setUsuario(usuario string) string {
+	recibo.usuario = usuario
+	return recibo.usuario
+}
 
+// SetTipo modifica el atributo tipo del articulo con idArticulo en el Recibo recibo
+func (recibo *Recibo) setTipo(idArticulo uint, tipo string) (string, error) {
+	encontrado := false
+
+	for i := range recibo.articulos {
+		if recibo.articulos[i].id == idArticulo {
+			encontrado = true
+			recibo.articulos[i].articulo.setTipo(tipo)
+		}
+	}
+
+	if !encontrado {
+		return tipo, &errorRecibo{fmt.Sprintf("no existe ningún articulo con id %d", idArticulo)}
+	}
+
+	return tipo, nil
+
+}
+
+// SiguienteId devuelve el siguiente al mayor id de los articulos de un recibo
+func (recibo *Recibo) siguienteId() uint {
+	if recibo.articulos == nil {
+		return 0
+	}
+
+	if len(recibo.articulos) == 0 {
+		return 0
+	}
+
+	maxId := uint(0)
+	for _, articulo := range recibo.articulos {
+		if articulo.id > maxId {
+			maxId = articulo.id
+		}
+	}
+	return maxId + 1
+}
+
+// ErrorReciboLectura representa un error en la lectura de un Recibo
 type errorReciboLectura struct {
 	err string
 }
@@ -117,7 +162,7 @@ func (e *errorReciboLectura) Error() string {
 // LeerRecibo recibe un string referente a la ruta de un archivo
 // que contiene un recibo de compra en texto plano y devuelve
 // un objeto Recibo con la información proporcionada.
-func LeerRecibo(archivo string) (Recibo, error) {
+func leerRecibo(archivo string) (Recibo, error) {
 	var recibo Recibo
 	var articulosRecibo []ArticuloRecibo
 
@@ -167,12 +212,15 @@ func LeerRecibo(archivo string) (Recibo, error) {
 		tipoIVA := []byte(art2[posIVA])
 		descripcion := strings.Join(art2[posUnd+1:posPrecio], " ")
 
+		// Asignamos identificador
+		id := recibo.siguienteId()
+
 		// Creamos objeto Articulo
-		articulo, err := NewArticulo(descripcion, "", precio, tipoIVA[0])
+		articulo, err := newArticulo(descripcion, "", precio, tipoIVA[0])
 		if err != nil {
 			return recibo, err
 		}
-		articuloRecibo := ArticuloRecibo{und, articulo}
+		articuloRecibo := ArticuloRecibo{id, und, articulo}
 
 		// Añadimos articuloRecibo a slice de ArticuloRecibo
 		articulosRecibo = append(articulosRecibo, articuloRecibo)
@@ -180,7 +228,7 @@ func LeerRecibo(archivo string) (Recibo, error) {
 	}
 
 	// Construimos objeto Recibo
-	recibo, err = NewRecibo(articulosRecibo, fechaCompra, "", lugarCompra1, establecimiento1)
+	recibo, err = newRecibo(articulosRecibo, fechaCompra, "", lugarCompra1, establecimiento1)
 	if err != nil {
 		return recibo, err
 	}
