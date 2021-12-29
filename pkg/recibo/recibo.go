@@ -69,16 +69,6 @@ type Recibo struct {
 	establecimiento string
 }
 
-// ErrorRecibo representa un error en la creación de un Recibo
-type errorRecibo struct {
-	err string
-}
-
-// ErrorRecibo implementa la interfaz Error
-func (e *errorRecibo) Error() string {
-	return fmt.Sprintf("Error en objeto Recibo: %s", e.err)
-}
-
 // NewRecibo inicializa un objeto de tipo Recibo.
 // Devuelve un objeto de tipo Recibo inicializado con los parámetros indicados.
 func newRecibo(articulos []ArticuloRecibo, fechaCompra time.Time, usuario string,
@@ -149,16 +139,6 @@ func (recibo *Recibo) siguienteId() uint {
 	return maxId + 1
 }
 
-// ErrorReciboLectura representa un error en la lectura de un Recibo
-type errorReciboLectura struct {
-	err string
-}
-
-// ErrorReciboLectura implementa la interfaz Error
-func (e *errorReciboLectura) Error() string {
-	return fmt.Sprintf("Error al leer Recibo: %s", e.err)
-}
-
 // LeerRecibo recibe un string referente a la ruta de un archivo
 // que contiene un recibo de compra en texto plano y devuelve
 // un objeto Recibo con la información proporcionada.
@@ -224,7 +204,6 @@ func leerRecibo(archivo string) (Recibo, error) {
 
 		// Añadimos articuloRecibo a slice de ArticuloRecibo
 		articulosRecibo = append(articulosRecibo, articuloRecibo)
-
 	}
 
 	// Construimos objeto Recibo

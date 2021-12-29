@@ -1,9 +1,5 @@
 package recibo
 
-import (
-	"fmt"
-)
-
 // Articulo representa un artículo vendido por un establecimiento.
 
 type Articulo struct {
@@ -23,17 +19,6 @@ type Articulo struct {
 	//   B -> IVA reducido, 10%.
 	//   C -> IVA general del 21%.
 	tipoIVA byte
-}
-
-// ErrorArticulo representa un error en la creación de un Articulo
-
-type errorArticulo struct {
-	err string
-}
-
-// ErrorArticulo implementa la interfaz Error
-func (e *errorArticulo) Error() string {
-	return fmt.Sprintf("Error al crear artículo: %s", e.err)
 }
 
 // NewArticulo inicializa un objeto de tipo Articulo.

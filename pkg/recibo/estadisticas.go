@@ -1,7 +1,6 @@
 package recibo
 
 import (
-	"fmt"
 	"sort"
 	"time"
 )
@@ -19,17 +18,6 @@ type ArticuloRecuento struct {
 
 	// Gasto es el gasto acumulado en el artículo en el recuento
 	gasto float32
-}
-
-// ErrorRecuento representa un error en un recuento de gasto
-
-type errorRecuento struct {
-	err string
-}
-
-// ErrorRecuento implementa la interfaz Error
-func (e *errorRecuento) Error() string {
-	return fmt.Sprintf("Error al hacer recuento: %s", e.err)
 }
 
 // AgruparArticulos realiza un recuento de los gastos realizados en los artículos de
