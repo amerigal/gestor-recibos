@@ -9,6 +9,12 @@ type Handler struct {
 	recibos map[uint]Recibo
 }
 
+func NewHandler() Handler {
+	var handler Handler
+	handler.recibos = make(map[uint]Recibo)
+	return handler
+}
+
 // SiguienteIdRecibo devuelve el siguiente id válido para un nuevo Recibo
 func (h *Handler) siguienteIdRecibo() uint {
 	if h.recibos == nil {
