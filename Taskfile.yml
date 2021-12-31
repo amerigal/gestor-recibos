@@ -7,7 +7,7 @@ tasks:
 
   installdeps:
     cmds:
-      - go mod tidy
+      - go mod tidy -go=1.16
 
   test:
     cmds:
