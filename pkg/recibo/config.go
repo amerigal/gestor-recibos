@@ -65,7 +65,7 @@ func NewConfig() Config {
 	viper.SetConfigType(configType)
 	err := viper.ReadInConfig()
 	if err != nil {
-		fmt.Println("Error al tomar configuración de archivo de configuración:", err)
+		fmt.Println("No se ha cargado ningún archivo de configuración:", err)
 	}
 
 	// Tomamos valores de variables de entorno
