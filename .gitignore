@@ -9,3 +9,4 @@
 
 # Config file
 config.yml
+*.env
