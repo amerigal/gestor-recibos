@@ -4,7 +4,8 @@ LABEL maintainer="antoniomerino99@gmail.com"
 
 RUN mkdir -p /app/test \
     && adduser --disabled-password gestor_recibos \
-    && chown -R gestor_recibos:gestor_recibos /app/test
+    && chown -R gestor_recibos:gestor_recibos /app/test \
+    && apk add build-base
 
 WORKDIR /app/test
 
