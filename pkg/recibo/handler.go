@@ -7,11 +7,16 @@ import "fmt"
 type Handler struct {
 	// Recibos es un diccionario que almacena objetos Recibo con su id como llave
 	recibos map[uint]Recibo
+
+	// MyLogger es un Logger para el registro de la actividad de Handler
+	myLogger Logger
 }
 
+// NewHandler construye un objeto Handler inicializando sus atributos
 func NewHandler() Handler {
 	var handler Handler
 	handler.recibos = make(map[uint]Recibo)
+	handler.myLogger = NewLogger()
 	return handler
 }
 
@@ -40,11 +45,13 @@ func (h *Handler) siguienteIdRecibo() uint {
 func (h *Handler) InsertarRecibo(rutaArchivo string, usuario string) (uint, error) {
 	recibo, err := leerRecibo(rutaArchivo)
 	if err != nil {
+		h.myLogger.Error("No se ha podido crear recibo a partir de %s.", rutaArchivo)
 		return 0, err
 	}
 	recibo.setUsuario(usuario)
 	id := h.siguienteIdRecibo()
 	h.recibos[id] = recibo
+	h.myLogger.Info("Creado un recibo con ID=%d y usuario=%s a partir del archivo %s", id, usuario, rutaArchivo)
 	return id, nil
 }
 
@@ -52,9 +59,11 @@ func (h *Handler) InsertarRecibo(rutaArchivo string, usuario string) (uint, erro
 func (h *Handler) EliminarRecibo(idRecibo uint) error {
 	_, existe := h.recibos[idRecibo]
 	if !existe {
+		h.myLogger.Error("No se ha podido eliminar recibo con ID=%d. Recibo no encontrado.", idRecibo)
 		return &errorHandler{fmt.Sprintf("no se encontró ningún recibo con id %d", idRecibo)}
 	}
 	delete(h.recibos, idRecibo)
+	h.myLogger.Info("Eliminado recibo con ID=%d.", idRecibo)
 	return nil
 }
 
@@ -62,8 +71,10 @@ func (h *Handler) EliminarRecibo(idRecibo uint) error {
 func (h *Handler) GetRecibo(idRecibo uint) (Recibo, error) {
 	recibo, existe := h.recibos[idRecibo]
 	if !existe {
+		h.myLogger.Error("No se ha podido obtener recibo con ID=%d. Recibo no encontrado.", idRecibo)
 		return recibo, &errorHandler{fmt.Sprintf("no se encontró ningún recibo con id %d", idRecibo)}
 	}
+	h.myLogger.Info("Obtenido recibo con ID=%d.", idRecibo)
 	return recibo, nil
 }
 
@@ -71,8 +82,10 @@ func (h *Handler) GetRecibo(idRecibo uint) (Recibo, error) {
 func (h *Handler) GetArticulosRecibo(idRecibo uint) ([]ArticuloRecibo, error) {
 	recibo, existe := h.recibos[idRecibo]
 	if !existe {
+		h.myLogger.Error("No se han podido obtener los artículos del recibo con ID=%d. Recibo no encontrado.", idRecibo)
 		return []ArticuloRecibo{}, &errorHandler{fmt.Sprintf("no se encontró ningún recibo con id %d", idRecibo)}
 	}
+	h.myLogger.Info("Obtenidos los artículos del recibo con ID=%d.", idRecibo)
 	return recibo.articulos, nil
 }
 
@@ -80,14 +93,18 @@ func (h *Handler) GetArticulosRecibo(idRecibo uint) ([]ArticuloRecibo, error) {
 func (h *Handler) GetArticuloRecibo(idRecibo uint, idArticulo uint) (ArticuloRecibo, error) {
 	recibo, existeRecibo := h.recibos[idRecibo]
 	if !existeRecibo {
+		h.myLogger.Error("No se ha podido obtener el artículo con ID=%d del recibo con ID=%d. Recibo no encontrado.", idArticulo, idRecibo)
 		return ArticuloRecibo{}, &errorHandler{fmt.Sprintf("no se encontró ningún recibo con id %d", idRecibo)}
 	}
 
 	articulo, err := recibo.getArticulo(idArticulo)
 
 	if err != nil {
+		h.myLogger.Error("No se ha podido obtener el artículo con ID=%d del recibo con ID=%d. Artículo no encontrado.", idArticulo, idRecibo)
 		return ArticuloRecibo{}, &errorHandler{fmt.Sprintf("no se encontró ningún artículo con id %d en el recibo con id %d", idArticulo, idRecibo)}
 	}
+
+	h.myLogger.Info("Obtenido el artículo con ID=%d del recibo con ID=%d.", idArticulo, idRecibo)
 
 	return *articulo, nil
 }
@@ -96,16 +113,19 @@ func (h *Handler) GetArticuloRecibo(idRecibo uint, idArticulo uint) (ArticuloRec
 func (h *Handler) SetTipoArticuloRecibo(tipo string, idRecibo uint, idArticulo uint) (ArticuloRecibo, error) {
 	recibo, existeRecibo := h.recibos[idRecibo]
 	if !existeRecibo {
+		h.myLogger.Error("No se ha podido modificar el tipo del artículo con ID=%d del recibo con ID=%d. Recibo no encontrado.", idArticulo, idRecibo)
 		return ArticuloRecibo{}, &errorHandler{fmt.Sprintf("no se encontró ningún recibo con id %d", idRecibo)}
 	}
 
 	err := recibo.setTipo(idArticulo, tipo)
 
 	if err != nil {
+		h.myLogger.Error("No se ha podido modificar el tipo del artículo con ID=%d del recibo con ID=%d. Artículo no encontrado.", idArticulo, idRecibo)
 		return ArticuloRecibo{}, &errorHandler{fmt.Sprintf("no se encontró ningún artículo con id %d en el recibo con id %d", idArticulo, idRecibo)}
 	}
 
 	articulo, _ := recibo.getArticulo(idArticulo)
+	h.myLogger.Info("Modificado el tipo del artículo con ID=%d del recibo con ID=%d a %s.", idArticulo, idRecibo, tipo)
 	return *articulo, nil
 }
 
@@ -121,17 +141,35 @@ func (h *Handler) getSliceRecibos() []Recibo {
 // GetRecuentoSemanal devuelve el recuento semanal de gastos del usuario 'usuario'
 func (h *Handler) GetRecuentoSemanal(usuario string) ([]ArticuloRecuento, error) {
 	recibos := h.getSliceRecibos()
-	return getRecuentoSemanal(recibos, usuario)
+	recuento, err := getRecuentoSemanal(recibos, usuario)
+	if err != nil {
+		h.myLogger.Warn("No hay artículos en el recuento semanal del usuario %s.", usuario)
+		return recuento, err
+	}
+	h.myLogger.Info("Calculado el recuento semanal del usuario %s.", usuario)
+	return recuento, nil
 }
 
 // GetRecuentoMensual devuelve el recuento mensual de gastos del usuario 'usuario'
 func (h *Handler) GetRecuentoMensual(usuario string) ([]ArticuloRecuento, error) {
 	recibos := h.getSliceRecibos()
-	return getRecuentoMensual(recibos, usuario)
+	recuento, err := getRecuentoMensual(recibos, usuario)
+	if err != nil {
+		h.myLogger.Warn("No hay artículos en el recuento mensual del usuario %s.", usuario)
+		return recuento, err
+	}
+	h.myLogger.Info("Calculado el recuento mensual del usuario %s.", usuario)
+	return recuento, nil
 }
 
 // GetTendencia devuelve la tendencia en el lugar 'lugarCompra'
 func (h *Handler) GetTendencia(lugarCompra string) ([]ArticuloRecuento, error) {
 	recibos := h.getSliceRecibos()
-	return getTendencia(recibos, lugarCompra)
+	tendencia, err := getTendencia(recibos, lugarCompra)
+	if err != nil {
+		h.myLogger.Warn("No hay artículos registrados en el lugar solicitado (%s).", lugarCompra)
+		return tendencia, err
+	}
+	h.myLogger.Info("Calculada la tendencia de gasto en %s.", lugarCompra)
+	return tendencia, nil
 }
