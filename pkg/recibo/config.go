@@ -20,7 +20,7 @@ const etcdKey = "useEtcd"
 const etcdAddressKey = "etcdAddress"
 
 // Clave para el archivo config de etcd
-const etcdConfigPathKey = "etcdConfigPathKey"
+const etcdConfigPathKey = "etcdConfigPath"
 
 // Path del archivo de Log por defecto
 const defaultLogFilePath = "/tmp/gestor-gastos.log"
