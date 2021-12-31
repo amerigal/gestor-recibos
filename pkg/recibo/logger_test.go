@@ -7,7 +7,7 @@ import (
 )
 
 func TestLogger(t *testing.T) {
-	testLogFile := "./test.log"
+	testLogFile := "/tmp/test.log"
 
 	logPathEnvValue, logPathEnvExists := os.LookupEnv("LOGFILEPATH")
 	logLevelEnvValue, logLevelEnvExists := os.LookupEnv("LOGLEVEL")
