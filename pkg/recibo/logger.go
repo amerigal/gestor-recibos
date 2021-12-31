@@ -26,7 +26,7 @@ func NewLogger() Logger {
 	// Establecemos medio de salida
 	salida, err := os.OpenFile(config.LogFilePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModePerm)
 	if err != nil {
-		fmt.Println("Salida estándar asignada al Log debido a error al abrir archivo de configuración", err)
+		fmt.Println("Se ha asignado al Log la salida estándar debido a un error abriendo archivo de Log", err)
 		salida = os.Stdout
 	}
 	writerSyncer := zapcore.AddSync(salida)
