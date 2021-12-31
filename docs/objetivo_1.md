@@ -18,9 +18,9 @@
 
 * [HU-P2 - Integración Continua](https://github.com/amerigal/gestor-recibos/issues/29) ✓
 
-* [HU-P3 - Servicio de logs](https://github.com/amerigal/gestor-recibos/issues/32)
+* [HU-P3 - Servicio de logs](https://github.com/amerigal/gestor-recibos/issues/32) ✓
 
-* [HU-P4 - Configuración remota](https://github.com/amerigal/gestor-recibos/issues/33)
+* [HU-P4 - Configuración remota](https://github.com/amerigal/gestor-recibos/issues/33) ✓
 
 ## Hoja de ruta
 
@@ -34,7 +34,7 @@
 
 * [Hito 4 - Gestor de gastos](https://github.com/amerigal/gestor-recibos/milestone/3) ✓
 
-* [Hito 5 - Registro de actividad y Configuración](https://github.com/amerigal/gestor-recibos/milestone/8)
+* [Hito 5 - Registro de actividad y Configuración](https://github.com/amerigal/gestor-recibos/milestone/8) ✓
 
 * [Hito 6 - API](https://github.com/amerigal/gestor-recibos/milestone/6)
 
