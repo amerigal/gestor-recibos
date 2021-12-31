@@ -26,3 +26,23 @@ log.Info().Str("var",value).Msg("Esto es un mensaje de log")
 En este sentido, he optado por realizar la implementación con Zap y dado que su configuración ha sido sencilla y ha funcionado correctamente, he decidido quedarme con este.
 
 Cabe mencionar que Zap presenta dos versiones de Log, una que se utiliza cuando la eficiencia es crítica y que solo permite logging estructurado, y otra que aunque menos eficiente sigue siendo razonablemente rápida y permite mayor flexibilidad con mensajes al estilo de printf. Es por esto último que he decidido usar la segunda versión, llamada SugaredLogger.
+
+## Servicio de Configuración
+
+Por motivos de seguridad y de adaptación a distintos contextos, es importante que la configuración de la aplicación no se encuentre establecida en el código, sino que se encuentre en el entorno, esto es, que se establezca mediante variables de entorno, ficheros externos de configuración o sistemas de configuración remota. Estos últimos se fundamentan en depósitos clave-valor distribuidos que permiten compartir la configuración a múltiples equipos. No hay muchas opciones disponibles de sistemas de configuración remota siendo [etcd](https://etcd.io/) y [consul](https://www.consul.io/) las principales. Ambos implementan esos depósitos clave-valor para compartir la configuración, siendo consul relativamente más complejo, de modo que he decidido integrar mi aplicación con etcd.
+
+Por otro lado, es necesario configurar un servicio que nos permita cargar la configuración del entorno, tomando valores de las variables de entorno, leyéndola de ficheros de configuración e incluso conectando con el servicio de etcd. Buscamos un servicio que proporcione las funcionalidades anteriores, sencillo de configurar y flexible a obtener información de distintas fuentes. Son dos los paquetes de go más relevantes a este respecto:
+
+- [Godotenv](https://github.com/joho/godotenv): Es el paquete más usado para cargar un fichero de configuración .env y que es bastante sencillo de utilizar. Sin embargo, su funcionalidad queda limitada a tomar la configuración de esos ficheros.
+
+- [Viper](https://github.com/spf13/viper): Se trata de una solución completa para gestionar la configuración en go. Permite la obtención de la configuración desde múltiples fuentes, soportando la lectura de variables de entorno, la carga de ficheros de configuración y la conexión con sistemas de configuración remota como etcd. Es por esta amplia oferta de fuentes que he decidido utilizar Viper en mi aplicación.
+
+La implementación de la clase de configuración se basa en tomar la configuración de las tres fuentes descritas (variables de entorno, ficheros de configuración y etcd) incluyendo también valores por defecto. En el caso de que una misma variable tome valores desde distintas fuentes, Viper establece un orden de prioridad:
+```
+Variables de entorno > Ficheros de configuración > etcd > Valores por defecto
+```
+Por defecto, el uso de etcd está dehabilitado. Para habilitarlo, hay que utilizar variables de entorno y/o ficheros de configuración para establecer el valor de ciertas variables relativas a su conexión:
+
+- Poner *useEtcd* a *true*.
+- Poner en *etcdAddress* la dirección a la que conectarse.
+- Poner en *etcdConfigPath* la ruta al fichero en que se encuentra la configuración en etcd.
