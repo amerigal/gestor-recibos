@@ -8,6 +8,9 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+// Única intancia de Logger del sistema
+var myLogger *Logger
+
 // Niveles de error
 var logLevels = map[string]zapcore.Level{"Debug": zapcore.DebugLevel, "Info": zapcore.InfoLevel, "Warn": zapcore.WarnLevel,
 	"Error": zapcore.ErrorLevel, "Panic": zapcore.PanicLevel, "Fatal": zapcore.FatalLevel}
@@ -18,8 +21,14 @@ type Logger struct {
 	sugarLogger *zap.SugaredLogger
 }
 
-// NewLogger construye un objeto de tipo Logger a partir de la configuración del entorno
-func NewLogger() Logger {
+// GetLogger devuelve la única instancia de tipo Logger del sistema. Si aún no ha sido inicializada,
+// se contruye a partir de la configuración del entorno
+func GetLogger() *Logger {
+
+	if myLogger != nil {
+		return myLogger
+	}
+
 	logger := Logger{}
 	config := NewConfig()
 
@@ -48,7 +57,9 @@ func NewLogger() Logger {
 	logger.sugarLogger = zap.New(core).Sugar()
 	logger.sugarLogger.Sync()
 
-	return logger
+	myLogger = &logger
+
+	return myLogger
 }
 
 // Debug registra un mensaje de log en nivel Debug

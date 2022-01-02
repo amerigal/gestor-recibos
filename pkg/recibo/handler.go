@@ -9,14 +9,14 @@ type Handler struct {
 	recibos map[uint]Recibo
 
 	// MyLogger es un Logger para el registro de la actividad de Handler
-	myLogger Logger
+	myLogger *Logger
 }
 
 // NewHandler construye un objeto Handler inicializando sus atributos
 func NewHandler() Handler {
 	var handler Handler
 	handler.recibos = make(map[uint]Recibo)
-	handler.myLogger = NewLogger()
+	handler.myLogger = GetLogger()
 	return handler
 }
 

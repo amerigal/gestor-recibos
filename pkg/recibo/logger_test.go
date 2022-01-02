@@ -1,55 +1,32 @@
 package recibo
 
 import (
+	"io/ioutil"
 	"os"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestLogger(t *testing.T) {
-	testLogFile := "/tmp/test.log"
+	logPath, logPathExists := os.LookupEnv("LOGFILEPATH")
 
-	logPathEnvValue, logPathEnvExists := os.LookupEnv("LOGFILEPATH")
-	logLevelEnvValue, logLevelEnvExists := os.LookupEnv("LOGLEVEL")
-	os.Setenv("LOGFILEPATH", testLogFile)
-	os.Setenv("LOGLEVEL", "Debug")
-
-	logger := NewLogger()
-
-	logger.Debug("Prueba DEBUG")
-	logger.Info("Prueba INFO")
-	logger.Warn("Prueba WARN")
-	logger.Error("Prueba ERROR")
-
-	if logPathEnvExists {
-		os.Setenv("LOGFILEPATH", logPathEnvValue)
-	} else {
-		os.Unsetenv("LOGFILEPATH")
-	}
-	if logLevelEnvExists {
-		os.Setenv("LOGLEVEL", logLevelEnvValue)
-	} else {
-		os.Unsetenv("LOGLEVEL")
+	if !logPathExists {
+		t.Fatalf("Variable de entorno LOGFILEPATH no tiene valor asignado")
 	}
 
-	file, err := os.Open(testLogFile)
+	testMsg := "Test log -> " + time.Now().String()
+
+	GetLogger().Debug(testMsg)
+
+	data, err := ioutil.ReadFile(logPath)
 	if err != nil {
-		t.Fatalf("Error al abrir fichero de Log: %s", err)
-	}
-	data := make([]byte, 1000)
-	count, err := file.Read(data)
-	os.Remove(testLogFile)
-	if err != nil {
-		t.Fatalf("Error al leer fichero de Log: %s", err)
+		t.Fatalf("Error al leer archivo de log: %s", err)
 	}
 
-	contenido := string(data[:count])
+	contenido := string(data)
 
-	if !strings.Contains(contenido, "Prueba DEBUG") ||
-		!strings.Contains(contenido, "Prueba INFO") ||
-		!strings.Contains(contenido, "Prueba WARN") ||
-		!strings.Contains(contenido, "Prueba ERROR") {
-
+	if !strings.Contains(contenido, testMsg) {
 		t.Fatalf("Logger no imprime mensajes de Log correctamente.")
 	}
 }
