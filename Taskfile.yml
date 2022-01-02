@@ -12,6 +12,8 @@ tasks:
   test:
     cmds:
       - go test -v pkg/*/*.go
+    env:
+      LOGFILEPATH: "/tmp/test.log"
 
   docker:
     cmds:
