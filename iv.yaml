@@ -7,3 +7,4 @@ automatizar:
 test: pkg/recibo/recibo_test.go
 CI: .circleci/config.yml
 configuracion: pkg/recibo/config.go
+framework: net/http
