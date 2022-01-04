@@ -55,6 +55,7 @@ Ejemplo de uso:
 ``` 
 GET /status
 ```
+---
 
 `-> /recibos`
 
@@ -65,6 +66,7 @@ Ejemplo de uso:
 ``` 
 GET /recibos
 ```
+---
 
 `-> /recibos/{usuario}/{nombreFicheroInput}`
 
@@ -76,6 +78,8 @@ Ejemplo de uso:
 POST /recibos/amerigal/reciboCoviran.txt
 ```
 Con dicha operación se creará un recibo con usuario *amerigal* y con contenido el extraido del fichero /input/reciboCoviran.txt.
+
+---
 
 `-> /recibos/{idR}`
 
@@ -89,6 +93,7 @@ GET /recibos/123
 ```
 DELETE /recibos/321
 ```
+---
 
 `-> /recibos/{idR}/articulos`
 
@@ -99,6 +104,7 @@ Ejemplo de uso:
 ```
 GET /recibos/123/articulos
 ```
+---
 
 `-> /recibos/{idR}/articulos/{idA}`
 
@@ -109,6 +115,7 @@ Ejemplo de uso:
 ```
 GET /recibos/123/articulos/1
 ```
+---
 
 `-> /recibos/{idR}/articulos/{idA}/{tipo}`
 
@@ -119,6 +126,7 @@ Ejemplo de uso:
 ```
 PUT /recibos/123/articulos/1/leche
 ```
+---
 
 `-> /recuentos/{periodo}/{usuario}`
 
@@ -129,6 +137,7 @@ Ejemplo de uso:
 ```
 GET /recuentos/semanal/amerigal
 ```
+---
 
 `-> /tendencias/{lugar}`
 
