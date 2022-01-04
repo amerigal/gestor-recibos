@@ -22,6 +22,8 @@
 
 * [HU-P4 - Configuración remota](https://github.com/amerigal/gestor-recibos/issues/33) ✓
 
+* [HU-P5 - API REST](https://github.com/amerigal/gestor-recibos/issues/43)
+
 ## Hoja de ruta
 
 * [Hito 0 - Diseño inicial](https://github.com/amerigal/gestor-recibos/milestone/1) ✓
