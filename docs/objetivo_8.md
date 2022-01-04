@@ -30,3 +30,112 @@ Se requiere un paquete que permita la generación de peticiones http y que permi
 - [httptest](https://pkg.go.dev/net/http/httptest): Está incluido en el paquete net/http de la biblioteca estándar de go. Permite generar peticiones http indicando la url y el método y asignándolas a los manejadores. Se devuelve la respuesta correspondiente, cuyo contenido puede ser analizado para ver si coincide con el esperado.
 
 - [httpexpect](https://pkg.go.dev/github.com/gavv/httpexpect): Integra la generación y procesamiento de peticiones http con aserciones para testear las respuestas. Está construida sobre net/http y simplifica mucho los tests respecto a httptest. Además se trata de un paquete bastante usado y con un activo mantenimiento. Es por dichas razones que he decido utilizar este paquete para realizar los tests.
+
+### Recursos
+
+Lo primero importante es determinar los recursos a los que se va a dar acceso, que deben ir en la línea de lo indicado en las historias de usuario planteadas al inicio (#2, #3 y #4). Con eso en mente, he decido que el recurso básico al que acceder sea el recibo, dentro del cuál se podra acceder a los otros recursos principales que son los artículos.
+
+Para dar acceso a la funcionalidad de recuento semanal y mensual (#3), he decidido considerar el recurso recuento, que se concretará indicando el período y el usuario.
+
+Por último, en referencia a la funcionalidad de calcular los artículos en los que se ha realizado más gasto en una determinada zona (#4), he decidido contemplar el recurso tendencia, que se concretará con el lugar de compra.
+
+### Rutas
+
+A continuación describiré las rutas definidas para el acceso a los recursos antes descritos. Cabe mencionar que, aunque teóricamente se podrían realizar más operaciones con dichos recursos, he restringido las operaciones a aquellas que posibilitan y proporcionan una manera cómoda de acceder a las funcionalidades asociadas a las historias de usuario (#2, #3 y #4).
+También comentar que en la definición de las URI, he seguido el estándar de considerar la forma plurar de los recursos, pese a que tras la especificación de parámetros se acabe devolviendo un único recurso.
+
+Las rutas habilitadas son las siguientes:
+
+`-> /status`
+
+Habilitada con el método GET. Devuelve una respuesta con código de estado 200 y una clave "Estado" en el cuerpo con el contenido "Todo OK!".
+
+Ejemplo de uso:
+
+``` 
+GET /status
+```
+
+`-> /recibos`
+
+Habilitada con el método GET. Devuelve todos los recibos registrados en el sistema.
+
+Ejemplo de uso:
+
+``` 
+GET /recibos
+```
+
+`-> /recibos/{usuario}/{nombreFicheroInput}`
+
+Habilitada con el método POST. Inserta un nuevo recibo que tendrá como usuario a *usuario* y que será generado a partir del fichero ubicado en el directorio /input y de nombre *nombreFicheroInput*. La idea es que en el directorio /input se almacenarán en texto plano los recibos de los que se hará uso en el sistema. Se trata de la única manera de insertar recibos en la aplicación y está directamente motivada por la historia de usuario #2. 
+
+Ejemplo de uso:
+
+```
+POST /recibos/amerigal/reciboCoviran.txt
+```
+Con dicha operación se creará un recibo con usuario *amerigal* y con contenido el extraido del fichero /input/reciboCoviran.txt.
+
+`-> /recibos/{idR}`
+
+Habilitada con los métodos GET y DELETE. Proporciona acceso al recibo de id *idR*, para devolverlo o eliminarlo respectivamente.
+
+Ejemplos de uso:
+
+```
+GET /recibos/123
+```
+```
+DELETE /recibos/321
+```
+
+`-> /recibos/{idR}/articulos`
+
+Habilitada con el método GET. Devuelve los artículos del recibo con id *idR*.
+
+Ejemplo de uso:
+
+```
+GET /recibos/123/articulos
+```
+
+`-> /recibos/{idR}/articulos/{idA}`
+
+Habilitada con el método GET. Devuelve el artículo con id *idA* del recibo con id *idR*.
+
+Ejemplo de uso:
+
+```
+GET /recibos/123/articulos/1
+```
+
+`-> /recibos/{idR}/articulos/{idA}/{tipo}`
+
+Habilitada con el método PUT. Modifica el atributo tipo del artículo con id *idA* del recibo con id *idR* estableciéndolo a *tipo*. La idea es que el cálculo de los recuentos y las tendencias de compra se realizan agrupando los artículos en función de su tipo (en su defecto de su descripción), de manera que se puede asignar el mismo tipo a aquellos artículos que queremos que se consideren de manera conjunta.
+
+Ejemplo de uso:
+
+```
+PUT /recibos/123/articulos/1/leche
+```
+
+`-> /recuentos/{periodo}/{usuario}`
+
+Habilitada con el método GET. El parámetro *periodo* puede tomar los valores *semanal* o *mensual*. Devuelve los cinco artículos en los que el usuario *usuario* ha realizado más gasto en el último mes o en la última semana respectivamente.
+
+Ejemplo de uso:
+
+```
+GET /recuentos/semanal/amerigal
+```
+
+`-> /tendencias/{lugar}`
+
+Habilitada con el método GET. Devuelve los cinco artículos en que se ha realizado mayor gasto entre todos los recibos de lugar *lugar*, con independencia de sus usuarios.
+
+Ejemplo de uso:
+
+```
+GET /tendencias/GRANADA
+```
