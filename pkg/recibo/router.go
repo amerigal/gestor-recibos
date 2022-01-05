@@ -8,7 +8,7 @@ func getRouter() *mux.Router {
 
 	myRouter.HandleFunc("/status", a.GetStatusApi).Methods("GET")
 	myRouter.HandleFunc("/recibos", a.GetRecibosApi).Methods("GET")
-	myRouter.HandleFunc("/recibos/{usuario}/{nombreFicheroInput}", a.InsertarReciboApi).Methods("POST")
+	myRouter.HandleFunc("/recibos", a.InsertarReciboApi).Methods("POST")
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}", a.GetReciboApi).Methods("GET")
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}", a.EliminarReciboApi).Methods("DELETE")
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}/articulos", a.GetArticulosReciboApi).Methods("GET")

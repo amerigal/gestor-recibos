@@ -59,25 +59,24 @@ GET /status
 
 `-> /recibos`
 
-Habilitada con el método GET. Devuelve todos los recibos registrados en el sistema.
+Habilitada con los métodos GET y POST. 
+
+Con GET devuelve todos los recibos registrados en el sistema.
 
 Ejemplo de uso:
 
 ``` 
 GET /recibos
 ```
----
 
-`-> /recibos/{usuario}/{nombreFicheroInput}`
-
-Habilitada con el método POST. Inserta un nuevo recibo que tendrá como usuario a *usuario* y que será generado a partir del fichero ubicado en el directorio /input y de nombre *nombreFicheroInput*. La idea es que en el directorio /input se almacenarán en texto plano los recibos de los que se hará uso en el sistema. Se trata de la única manera de insertar recibos en la aplicación y está directamente motivada por la historia de usuario #2. 
+Con POST permite crear un nuevo recibo. Para ello hay que incluir en el cuerpo de la petición el valor de dos parámetros:"usuario", indicando el valor del usuario asociado al recibo, y "textoRecibo", contiendo el texto en plano con el contenido del recibo. Se insertará entonces un nuevo recibo que tendrá como usuario el indicado y generado a partir del contenido del texto plano. Se trata de la única manera de insertar recibos en la aplicación y está directamente motivada por la historia de usuario #2.
 
 Ejemplo de uso:
 
 ```
-POST /recibos/amerigal/reciboCoviran.txt
+POST /recibos
 ```
-Con dicha operación se creará un recibo con usuario *amerigal* y con contenido el extraido del fichero /input/reciboCoviran.txt.
+(Incluyendo en el cuerpo de la petición los parámetros indicados.)
 
 ---
 
