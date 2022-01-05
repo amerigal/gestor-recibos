@@ -107,43 +107,43 @@ GET /recibos/123/articulos
 
 `-> /recibos/{idR}/articulos/{idA}`
 
-Habilitada con el método GET. Devuelve el artículo con id *idA* del recibo con id *idR*.
+Habilitada con los métodos GET y PATCH. 
+
+Con GET devuelve el artículo con id *idA* del recibo con id *idR*.
 
 Ejemplo de uso:
 
 ```
 GET /recibos/123/articulos/1
 ```
----
 
-`-> /recibos/{idR}/articulos/{idA}/{tipo}`
-
-Habilitada con el método PATCH. Modifica el atributo tipo del artículo con id *idA* del recibo con id *idR* estableciéndolo a *tipo*. La idea es que el cálculo de los recuentos y las tendencias de compra se realizan agrupando los artículos en función de su tipo (en su defecto de su descripción), de manera que se puede asignar el mismo tipo a aquellos artículos que queremos que se consideren de manera conjunta.
+Con PATCH hay que pasarle en el cuerpo de la petición el valor del parámetro "tipo". Modifica el atributo tipo del artículo con id *idA* del recibo con id *idR*. La idea es que el cálculo de los recuentos y las tendencias de compra se realizan agrupando los artículos en función de su tipo (en su defecto de su descripción), de manera que se puede asignar el mismo tipo a aquellos artículos que queremos que se consideren de manera conjunta.
 
 Ejemplo de uso:
 
 ```
-PATCH /recibos/123/articulos/1/leche
+PATCH /recibos/123/articulos/1
 ```
+(Incluyendo en el cuerpo de la petición el parámetro indicado.)
 ---
 
-`-> /recuentos/{periodo}/{usuario}`
+`-> /recuentos`
 
-Habilitada con el método GET. El parámetro *periodo* puede tomar los valores *semanal* o *mensual*. Devuelve los cinco artículos en los que el usuario *usuario* ha realizado más gasto en el último mes o en la última semana respectivamente.
+Habilitada con el método GET. Hay que pasar en la parte del query de la URL el valor de los parámetros "usuario" y "periodo". El parámetro "periodo" puede tomar los valores *semanal* o *mensual*. Devuelve los cinco artículos en los que el usuario indicado ha realizado más gasto en el último mes o en la última semana respectivamente.
 
 Ejemplo de uso:
 
 ```
-GET /recuentos/semanal/amerigal
+GET /recuentos?usuario=amerigal&periodo=semanal
 ```
 ---
 
-`-> /tendencias/{lugar}`
+`-> /tendencias`
 
-Habilitada con el método GET. Devuelve los cinco artículos en que se ha realizado mayor gasto entre todos los recibos de lugar *lugar*, con independencia de sus usuarios.
+Habilitada con el método GET. Hay que pasar en la parte del query de la URL el valor del parámetro "lugar". Devuelve los cinco artículos en que se ha realizado mayor gasto entre todos los recibos de lugar indicado, con independencia de sus usuarios.
 
 Ejemplo de uso:
 
 ```
-GET /tendencias/GRANADA
+GET /tendencias?lugar=GRANADA
 ```
