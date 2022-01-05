@@ -13,7 +13,7 @@ func getRouter() *mux.Router {
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}", a.EliminarReciboApi).Methods("DELETE")
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}/articulos", a.GetArticulosReciboApi).Methods("GET")
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}/articulos/{idA:[0-9]+}", a.GetArticuloReciboApi).Methods("GET")
-	myRouter.HandleFunc("/recibos/{idR:[0-9]+}/articulos/{idA:[0-9]+}/{tipo}", a.SetTipoArticuloReciboApi).Methods("PUT")
+	myRouter.HandleFunc("/recibos/{idR:[0-9]+}/articulos/{idA:[0-9]+}/{tipo}", a.SetTipoArticuloReciboApi).Methods("PATCH")
 	myRouter.HandleFunc("/recuentos/{periodo:semanal|mensual}/{usuario}", a.GetRecuentoApi).Methods("GET")
 	myRouter.HandleFunc("/tendencias/{lugar}", a.GetTendenciaApi).Methods("GET")
 

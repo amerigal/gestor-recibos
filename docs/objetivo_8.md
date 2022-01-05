@@ -119,12 +119,12 @@ GET /recibos/123/articulos/1
 
 `-> /recibos/{idR}/articulos/{idA}/{tipo}`
 
-Habilitada con el método PUT. Modifica el atributo tipo del artículo con id *idA* del recibo con id *idR* estableciéndolo a *tipo*. La idea es que el cálculo de los recuentos y las tendencias de compra se realizan agrupando los artículos en función de su tipo (en su defecto de su descripción), de manera que se puede asignar el mismo tipo a aquellos artículos que queremos que se consideren de manera conjunta.
+Habilitada con el método PATCH. Modifica el atributo tipo del artículo con id *idA* del recibo con id *idR* estableciéndolo a *tipo*. La idea es que el cálculo de los recuentos y las tendencias de compra se realizan agrupando los artículos en función de su tipo (en su defecto de su descripción), de manera que se puede asignar el mismo tipo a aquellos artículos que queremos que se consideren de manera conjunta.
 
 Ejemplo de uso:
 
 ```
-PUT /recibos/123/articulos/1/leche
+PATCH /recibos/123/articulos/1/leche
 ```
 ---
 
