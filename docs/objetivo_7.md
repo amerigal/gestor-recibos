@@ -41,7 +41,7 @@ La implementación de la clase de configuración se basa en tomar la configuraci
 ```
 Variables de entorno > Ficheros de configuración > etcd > Valores por defecto
 ```
-Por defecto, el uso de etcd está dehabilitado. Para habilitarlo, hay que utilizar variables de entorno y/o ficheros de configuración para establecer el valor de ciertas variables relativas a su conexión:
+Por defecto, el uso de etcd está deshabilitado. Para habilitarlo, hay que utilizar variables de entorno y/o ficheros de configuración para establecer el valor de ciertas variables relativas a su conexión:
 
 - Poner *useEtcd* a *true*.
 - Poner en *etcdAddress* la dirección a la que conectarse.

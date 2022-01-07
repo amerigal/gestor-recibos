@@ -8,19 +8,12 @@
 
 ## Historias de usuario
 
-* [HU1 - Reconocimiento de recibos](https://github.com/amerigal/gestor-recibos/issues/2) ✓
+* [HU1 - Reconocimiento de recibos](https://github.com/amerigal/gestor-recibos/issues/2)
 
-* [HU2 - Gasto semanal/mensual](https://github.com/amerigal/gestor-recibos/issues/3) ✓
+* [HU2 - Gasto semanal/mensual](https://github.com/amerigal/gestor-recibos/issues/3)
 
-* [HU3 - Tendencia de compra](https://github.com/amerigal/gestor-recibos/issues/4) ✓
+* [HU3 - Tendencia de compra](https://github.com/amerigal/gestor-recibos/issues/4)
 
-* [HU-P1 - Contenedor de tests](https://github.com/amerigal/gestor-recibos/issues/21) ✓
-
-* [HU-P2 - Integración Continua](https://github.com/amerigal/gestor-recibos/issues/29) ✓
-
-* [HU-P3 - Servicio de logs](https://github.com/amerigal/gestor-recibos/issues/32) ✓
-
-* [HU-P4 - Configuración remota](https://github.com/amerigal/gestor-recibos/issues/33) ✓
 
 * [HU-P5 - API REST](https://github.com/amerigal/gestor-recibos/issues/43)
 
