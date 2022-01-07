@@ -46,3 +46,5 @@ Además, se ha configurado el proyecto mediante Circle-CI para que se lance el c
 - [Tests unitarios](docs/objetivo_4.md)
 - [Elección de contenedor base](docs/objetivo_5.md)
 - [Elección de servicio de IC](docs/objetivo_6.md)
+- [Servicio de logging](docs/objetivo_7.md)
+- [Servicio de configuración](docs/objetivo_7.md#Servicio-de-configuración)

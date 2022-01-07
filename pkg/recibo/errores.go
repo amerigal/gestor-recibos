@@ -22,6 +22,11 @@ type errorRecuento struct {
 	err string
 }
 
+// ErrorHandler representa un error en un objeto Handler
+type errorHandler struct {
+	err string
+}
+
 // ErrorArticulo implementa la interfaz Error
 func (e *errorArticulo) Error() string {
 	return fmt.Sprintf("Error al crear artículo: %s", e.err)
@@ -40,4 +45,9 @@ func (e *errorReciboLectura) Error() string {
 // ErrorRecuento implementa la interfaz Error
 func (e *errorRecuento) Error() string {
 	return fmt.Sprintf("Error al hacer recuento: %s", e.err)
+}
+
+// ErrorHandler implementa la interfaz Error
+func (e *errorHandler) Error() string {
+	return fmt.Sprintf("Error en Handler: %s", e.err)
 }
