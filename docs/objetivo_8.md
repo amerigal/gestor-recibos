@@ -127,23 +127,23 @@ PATCH /recibos/123/articulos/1
 (Incluyendo en el cuerpo de la petición el parámetro indicado.)
 ---
 
-`-> /recuentos`
+`-> /recuentos/{periodo}/{usuario}`
 
-Habilitada con el método GET. Hay que pasar en la parte del query de la URL el valor de los parámetros "usuario" y "periodo". El parámetro "periodo" puede tomar los valores *semanal* o *mensual*. Devuelve los cinco artículos en los que el usuario indicado ha realizado más gasto en el último mes o en la última semana respectivamente.
+Habilitada con el método GET. El parámetro *periodo* puede tomar los valores *semanal* o *mensual*. Devuelve los cinco artículos en los que el usuario *usuario* ha realizado más gasto en el último mes o en la última semana respectivamente.
 
 Ejemplo de uso:
 
 ```
-GET /recuentos?usuario=amerigal&periodo=semanal
+GET /recuentos/semanal/amerigal
 ```
 ---
 
-`-> /tendencias`
+`-> /tendencias/{lugar}`
 
-Habilitada con el método GET. Hay que pasar en la parte del query de la URL el valor del parámetro "lugar". Devuelve los cinco artículos en que se ha realizado mayor gasto entre todos los recibos de lugar indicado, con independencia de sus usuarios.
+Habilitada con el método GET. Devuelve los cinco artículos en que se ha realizado mayor gasto entre todos los recibos de lugar *lugar*, con independencia de sus usuarios.
 
 Ejemplo de uso:
 
 ```
-GET /tendencias?lugar=GRANADA
+GET /tendencias/GRANADA
 ```
