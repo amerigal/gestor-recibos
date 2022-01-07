@@ -32,8 +32,8 @@ func TestLeerReciboArchivo(t *testing.T) {
 }
 
 func TestSiguienteIdPrimero(t *testing.T) {
-	recibo, _ := newRecibo([]ArticuloRecibo{}, time.Now(), "u", "l", "e")
-	if recibo.siguienteId() != 0 {
+	articulos := []ArticuloRecibo{}
+	if siguienteId(articulos) != 0 {
 		t.Fatalf("Primer id no asigndo correctamente.")
 	}
 }
@@ -41,8 +41,8 @@ func TestSiguienteIdPrimero(t *testing.T) {
 func TestSiguienteIdSegundo(t *testing.T) {
 	articulo, _ := newArticulo("descripcion", "tipo", 2.50, 'A')
 	articuloRecibo := ArticuloRecibo{0, 1, articulo}
-	recibo, _ := newRecibo([]ArticuloRecibo{articuloRecibo}, time.Now(), "u", "l", "e")
-	if recibo.siguienteId() != 1 {
+	articulos := []ArticuloRecibo{articuloRecibo}
+	if siguienteId(articulos) != 1 {
 		t.Fatalf("Los id no se asignan consecutivamente.")
 	}
 }

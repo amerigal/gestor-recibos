@@ -131,18 +131,18 @@ func (recibo *Recibo) setTipo(idArticulo uint, tipo string) error {
 	return nil
 }
 
-// SiguienteId devuelve el siguiente al mayor id de los articulos de un recibo
-func (recibo *Recibo) siguienteId() uint {
-	if recibo.articulos == nil {
+// SiguienteId devuelve el siguiente al mayor id de un slice de artículos
+func siguienteId(articulos []ArticuloRecibo) uint {
+	if articulos == nil {
 		return 0
 	}
 
-	if len(recibo.articulos) == 0 {
+	if len(articulos) == 0 {
 		return 0
 	}
 
 	maxId := uint(0)
-	for _, articulo := range recibo.articulos {
+	for _, articulo := range articulos {
 		if articulo.id > maxId {
 			maxId = articulo.id
 		}
@@ -204,7 +204,7 @@ func leerRecibo(archivo string) (Recibo, error) {
 		descripcion := strings.Join(art2[posUnd+1:posPrecio], " ")
 
 		// Asignamos identificador
-		id := recibo.siguienteId()
+		id := siguienteId(articulosRecibo)
 
 		// Creamos objeto Articulo
 		articulo, err := newArticulo(descripcion, "", precio, tipoIVA[0])
