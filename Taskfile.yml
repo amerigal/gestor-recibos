@@ -18,3 +18,9 @@ tasks:
   docker:
     cmds:
       - docker run -t -v `pwd`:/app/test amerigal/gestor-recibos
+
+  build:
+    cmds:
+  
+  install:
+    cmds:
