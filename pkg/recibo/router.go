@@ -16,5 +16,8 @@ func getRouter() *mux.Router {
 	myRouter.HandleFunc("/recibos/{idR:[0-9]+}/articulos/{idA:[0-9]+}", a.SetTipoArticuloReciboApi).Methods("PATCH")
 	myRouter.HandleFunc("/recuentos/{periodo:semanal|mensual}/{usuario}", a.GetRecuentoApi).Methods("GET")
 	myRouter.HandleFunc("/tendencias/{lugar}", a.GetTendenciaApi).Methods("GET")
+
+	myRouter.Use(LogHttpMiddleware)
+
 	return myRouter
 }
