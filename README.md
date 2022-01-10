@@ -48,3 +48,4 @@ Además, se ha configurado el proyecto mediante Circle-CI para que se lance el c
 - [Elección de servicio de IC](docs/objetivo_6.md)
 - [Servicio de logging](docs/objetivo_7.md)
 - [Servicio de configuración](docs/objetivo_7.md#Servicio-de-configuración)
+- [Diseño de API](docs/objetivo_8.md)
